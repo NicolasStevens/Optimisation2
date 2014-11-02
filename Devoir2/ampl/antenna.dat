@@ -1,0 +1,6 @@
+set P :=;
+set S :=;
+param N := 40;
+set rings := 1..N;
+param diS;
+param diP;
