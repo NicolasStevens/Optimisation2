@@ -17,3 +17,4 @@ subject to S1[s in S]: sum{i in rings} diS[i,s] <= epsilon;
 subject to S2[s in S]: sum{i in rings} -diS[i,s] <= epsilon;
 subject to P1[p in P]: sum{i in rings} 1-diP[i,p] <= epsilon;
 subject to P2[p in P]: sum{i in rings} diP[i,p]-1 <= epsilon;
+
