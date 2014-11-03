@@ -3,10 +3,11 @@ model antennalin.mod;
 data antenna.dat;
 option solver cplex;
 solve;
+for{i in rings}{
 printf "%d,%d \n",i,x[i] > antennalin4050.csv;
-
+}
 # Resolution pour des valeurs plus proches
-data antennacloser.dat;
-solve;
-printf "%d,%d \n",i,x[i] > antennalincloser.csv;
+#data antennacloser.dat;
+#solve;
+#printf "%d,%d \n",i,x[i] > antennalincloser.csv;
 
