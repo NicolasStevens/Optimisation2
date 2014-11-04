@@ -15,5 +15,6 @@ end
 figure()
 plot(S,DS); hold on;
 plot(P,DP);
+saveas(gcf, 'D-test' ,'png');
 end
 
