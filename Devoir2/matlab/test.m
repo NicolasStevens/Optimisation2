@@ -5,10 +5,10 @@ for i=1:N
 end
 [S,P,diP,diS] = computeDiagram(50,40,r);
 
-csvwrite('dataS.csv',S);
-csvwrite('dataP.csv',P);
-csvwrite('datadiS.csv',diS);
-csvwrite('datadiP.csv',diP);
+%csvwrite('dataS.csv',S);
+%csvwrite('dataP.csv',P);
+%csvwrite('datadiS.csv',diS);
+%csvwrite('datadiP.csv',diP);
 
 x=load('antennalin4050.csv');
 x=x(:,2);

@@ -18,8 +18,8 @@ var epsilon, >=0;
 minimize erreurdiagramme : epsilon;
 
 
-subject to S1{s in S}: sum{i in rings} x[i]*diS[i,s] <= epsilon;
-subject to S2{s in S}: sum{i in rings} -x[i]*diS[i,s] <= epsilon;
-subject to P1{p in P}: 1-sum{i in rings} (x[i]*diP[i,p]) <= epsilon;
-subject to P2{p in P}: -1+sum{i in rings} (x[i]*diP[i,p]) <= epsilon;
+subject to S1{s in S}: sum{i in rings} x[i]*0.5*diS[i,s] <= epsilon;
+subject to S2{s in S}: sum{i in rings} -x[i]*0.5*diS[i,s] <= epsilon;
+subject to P1{p in P}: 1-sum{i in rings} (x[i]*0.5*diP[i,p]) <= epsilon;
+subject to P2{p in P}: -1+sum{i in rings} (x[i]*0.5*diP[i,p]) <= epsilon;
 

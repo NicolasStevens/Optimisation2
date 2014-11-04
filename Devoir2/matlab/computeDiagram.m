@@ -26,10 +26,10 @@ for i=1:N
     end
 end
 
-figure()
-plot(P,diP(1,:));
-figure()
-plot(S,diS(1,:));
+%figure()
+%plot(P,diP(1,:));
+%figure()
+%plot(S,diS(1,:));
 
 
 end
