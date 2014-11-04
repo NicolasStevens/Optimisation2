@@ -19,12 +19,13 @@ xx=linspace(0,2*pi,l);
 
 for i=1:N
     for j=1:m
-        fS = cos(2*pi*r(i)*cos(S(j))*cos(xx));
-        fP = cos(2*pi*r(i)*cos(P(j))*cos(xx));
+        fS = 0.5*cos(2*pi*r(i)*cos(S(j))*cos(xx));
+        fP = 0.5*cos(2*pi*r(i)*cos(P(j))*cos(xx));
         diP(i,j) = trapz(xx,fP);
         diS(i,j) = trapz(xx,fS);
     end
 end
+
 figure()
 plot(P,diP(1,:));
 figure()

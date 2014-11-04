@@ -9,3 +9,6 @@ csvwrite('dataS.csv',S);
 csvwrite('dataP.csv',P);
 csvwrite('datadiS.csv',diS);
 csvwrite('datadiP.csv',diP);
+
+%x=load()
+%plotD(x,r);
