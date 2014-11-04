@@ -6,6 +6,7 @@ solve;
 for{i in rings}{
 printf "%d,%d \n",i,x[i] > antennalin4050.csv;
 }
+display erreurdiagramme;
 # Resolution pour des valeurs plus proches
 #data antennacloser.dat;
 #solve;

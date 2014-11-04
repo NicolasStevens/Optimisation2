@@ -1,0 +1,20 @@
+\section{Première formulation robuste}
+Afin de prendre en compte les erreurs sur les facteurs d'amplification $x_i$, nous utilisons les valeurs maximales des variations possibles de $\hat{D(\theta)}$ sur un intervalle.\\
+\begin{eqnarray}
+|\hat{D(\theta)}| & = & |\sum_{i=1}^{n} x_i(1+\xi_i)d_i(\theta)| \nonumber \\
+& \leq & |\sum_{i=1}^{n} x_i d_i(\theta)| + |\sum_{i=1}^{n} x_i \xi_i d_i(\theta)| \nonumber \\
+& \leq & |D(\theta)| + \sum_{i=1}^{n} |\tau d_i(\theta)\frac{h}{2}| \nonumber
+\end{eqnarray}
+En imposant 
+$$|D(\theta)| + \sum_{i=1}^{n} |\tau d_i(\theta)\frac{h}{2}|\leq \epsilon $$
+on est sur que $|\hat{D(\theta)}|\leq \epsilon$. De la même manière, on traduit les contraintes sur P : 
+$$|D(\theta)-1| + \sum_{i=1}^{n} |\tau d_i(\theta)\frac{h}{2}|\leq \epsilon $$
+Il nous faut donc introduire n variables $v_i$ pour chaque $\theta$ échantillonné, correspondant aux valeurs absolues des $\tau d_i(\theta)\frac{h}{2}$
+On a alors 
+\begin{eqnarray}
+|D(\theta)| + \sum_{i=1}^{n} |\tau x_i d_i(\theta)\frac{h}{2}| & \leq & \epsilon \nonumber \\
+|D(\theta)-1| + \sum_{i=1}^{n} |\tau x_i d_i(\theta)\frac{h}{2}| & \leq & \epsilon \nonumber \\
+\tau x_i d_i(\theta)\frac{h}{2} & \leq & v_i \nonumber \\
+-\tau x_i d_i(\theta)\frac{h}{2} & \leq & v_i \nonumber 
+\end{eqnarray}
+

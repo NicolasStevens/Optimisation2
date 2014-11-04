@@ -1,0 +1,21 @@
+\section{Formulation linéaire}Le problème d'optimisation posé ici consiste à minimiser l'erreur d'un diagramme. Il s'agit de trouver les coefficients d'amplification des anneaux de l'antenne qui satisfassent aux conditions de diagramme unitaire ou nul. En terme de problème d'optimisation, cela se traduit par :
+\begin{eqnarray}
+\min_{x_i} \epsilon & & \nonumber\\
+\text{tel que} & & |D(\theta)-1|\leq \epsilon \:\: \forall \theta\in \mathcal{P}\nonumber\\
+\text{et que} & & |D(\theta)|\leq \epsilon \:\: \forall \theta\in \mathcal{S}\label{conS}\\
+\text{avec } D(\theta) &=& \sum_{i=1}^N x_i d_i(\theta) \nonumber
+\end{eqnarray}
+Le problème posé présente un désavantage majeur; il est soumis à une infinité de contraintes (\ref{conS}).\\
+Pour pallier à ce problème, nous échantillonnons le problème par rapport à $\theta$. Les contraintes du problèmes ne s'appliquant que dans $P = [\theta_P\: 90\degres  ]$ et $S = [0\degres \:\theta_S]$, nous échantillonnons seulement dans ces deux ensembles. Nous avons ainsi un nombre fini de contraintes. Afin de n'obtenir que des contraintes linéaires, nous transformons chaque contrainte faisant intervenir une valeur absolue en deux contraintes linéaires. Le problème devient alors : 
+\begin{eqnarray}
+\min_{x_i} \epsilon & & \nonumber\\
+\text{tel que} & & D(\theta)-1\leq \epsilon \:\: \forall \theta\in \mathcal{P}_e\nonumber\\
+\text{et que} & & -D(\theta)+1\leq \epsilon \:\: \forall \theta\in \mathcal{P}_e\nonumber\\
+\text{et que} & & D(\theta)\leq \epsilon \:\: \forall \theta\in \mathcal{S}_e\nonumber\\
+\text{et que} & & -D(\theta)\leq \epsilon \:\: \forall \theta\in \mathcal{S}_e\nonumber\\
+\text{avec } D(\theta) &=& \sum_{i=1}^N x_i d_i(\theta) \nonumber
+\end{eqnarray}
+$\mathcal{P}_e = \left\lbrace p_0,p_1,...,p_{Np}\right\rbrace$ et $\mathcal{S}_e= \left\lbrace s_0,s_1,...,s_{Ns}\right\rbrace$ sont les ensembles des échantillons dans $\mathcal{P}$ et $\mathcal{S}$. Deux points consécutifs sont séparés par une distance maximale de $h$.\\
+Cette formulation est bien évidemment une formulation approchée de notre problème initial puisque des points entre les échantillons pourront ne pas satisfaire les contraintes de diagramme unitaire ou nul. Cependant le non-respect de ces contraintes peut être quantifié. En effet, d'après les définitions des $d_i(\theta)$, la valeur absolue de la dérivée de ceux-ci ne peut pas dépasser $\pi$. Ce qui signifie que le dépassement de l'erreur de diagramme est au maximum $\sum |x_i\pi h|$. Il nous suffit alors de choisir un $h$ adapté au niveau de précision que nous voulons atteindre. 
+\\
+\textbf{Todo : Expliquer notre choix de h, trouver une meilleure borne?, résoudre en ampl}		
