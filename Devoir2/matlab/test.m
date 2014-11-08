@@ -12,12 +12,9 @@ diS(6,50);
 %csvwrite('datadiS.csv',diS);
 %csvwrite('datadiP.csv',diP);
 
-x=load('antennalin4050.csv');
+x=load('antennalin4050-Rapproche.csv');
 x=x(:,2)
-ff = x'*diS(:,9);
-for i=1:length(S)
-   abs(x'*diP(:,i) - 1);
-   
-end
 
-plotD(x,r);
+%eps=0.02024713577;
+eps=0.09368302883;
+plotD(x,r,S,P,eps);

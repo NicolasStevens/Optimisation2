@@ -1,21 +1,74 @@
-\section{Formulation linéaire}Le problème d'optimisation posé ici consiste à minimiser l'erreur d'un diagramme. Il s'agit de trouver les coefficients d'amplification des anneaux de l'antenne qui satisfassent aux conditions de diagramme unitaire ou nul. En terme de problème d'optimisation, cela se traduit par :
-\begin{eqnarray}
-\min_{x_i} \epsilon & & \nonumber\\
-\text{tel que} & & |D(\theta)-1|\leq \epsilon \:\: \forall \theta\in \mathcal{P}\nonumber\\
-\text{et que} & & |D(\theta)|\leq \epsilon \:\: \forall \theta\in \mathcal{S}\label{conS}\\
-\text{avec } D(\theta) &=& \sum_{i=1}^N x_i d_i(\theta) \nonumber
-\end{eqnarray}
+\section{Formulation linéaire}
+On étudie le problème d'optimisation qui consiste à optimiser le diagramme $D(\theta)$ d'une antenne. Il s'agit de trouver les coefficients d'amplification $x_i$ des $N$ anneaux de l'antenne qui satisfassent aux conditions de diagramme unitaire (dans l'intervalle $\mathcal{P}=[\theta_P, 90\degree]$) ou nul (dans l'intervalle $\mathcal{S}=[0 \degree,\theta_S]$). On peut formuler le programme d'optimisation comme suit :
+\begin{align}
+\min_{x_i,\epsilon} \epsilon & \\
+&|D(\theta)-1|  \leq \epsilon &\forall \theta\in \mathcal{P}\\
+&|D(\theta)| \leq \epsilon & \forall \theta\in \mathcal{S}\label{conS}\\
+& \epsilon \geq 0\\
+\text{avec } D(\theta) = \sum_{i=1}^N x_i d_i(\theta) & \text{ et } d_i(\theta) = \int_0^{2 \pi} cos(2 \pi r_i cos(\theta)cos(\phi)) d\phi \label{eq:di}
+\end{align}
 Le problème posé présente un désavantage majeur; il est soumis à une infinité de contraintes (\ref{conS}).\\
 Pour pallier à ce problème, nous échantillonnons le problème par rapport à $\theta$. Les contraintes du problèmes ne s'appliquant que dans $P = [\theta_P\: 90\degres  ]$ et $S = [0\degres \:\theta_S]$, nous échantillonnons seulement dans ces deux ensembles. Nous avons ainsi un nombre fini de contraintes. Afin de n'obtenir que des contraintes linéaires, nous transformons chaque contrainte faisant intervenir une valeur absolue en deux contraintes linéaires. Le problème devient alors : 
-\begin{eqnarray}
-\min_{x_i} \epsilon & & \nonumber\\
-\text{tel que} & & D(\theta)-1\leq \epsilon \:\: \forall \theta\in \mathcal{P}_e\nonumber\\
-\text{et que} & & -D(\theta)+1\leq \epsilon \:\: \forall \theta\in \mathcal{P}_e\nonumber\\
-\text{et que} & & D(\theta)\leq \epsilon \:\: \forall \theta\in \mathcal{S}_e\nonumber\\
-\text{et que} & & -D(\theta)\leq \epsilon \:\: \forall \theta\in \mathcal{S}_e\nonumber\\
-\text{avec } D(\theta) &=& \sum_{i=1}^N x_i d_i(\theta) \nonumber
-\end{eqnarray}
+\begin{align}
+\min_{x_i,\epsilon} \epsilon & & \nonumber\\
+& D(\theta)-1\leq \epsilon & \forall \theta\in \mathcal{P}_e \\
+& -D(\theta)+1\leq \epsilon & \forall \theta\in \mathcal{P}_e\\
+& D(\theta)\leq \epsilon & \forall \theta\in \mathcal{S}_e\\
+& -D(\theta)\leq \epsilon &\forall \theta\in \mathcal{S}_e\\
+\text{avec } D(\theta) = \sum_{i=1}^N x_i d_i(\theta) & \text{ et } d_i(\theta) = \int_0^{2 \pi} cos(2 \pi r_i cos(\theta)cos(\phi)) d\phi 
+\end{align}
 $\mathcal{P}_e = \left\lbrace p_0,p_1,...,p_{Np}\right\rbrace$ et $\mathcal{S}_e= \left\lbrace s_0,s_1,...,s_{Ns}\right\rbrace$ sont les ensembles des échantillons dans $\mathcal{P}$ et $\mathcal{S}$. Deux points consécutifs sont séparés par une distance maximale de $h$.\\
 Cette formulation est bien évidemment une formulation approchée de notre problème initial puisque des points entre les échantillons pourront ne pas satisfaire les contraintes de diagramme unitaire ou nul. Cependant le non-respect de ces contraintes peut être quantifié. En effet, d'après les définitions des $d_i(\theta)$, la valeur absolue de la dérivée de ceux-ci ne peut pas dépasser $\pi$. Ce qui signifie que le dépassement de l'erreur de diagramme est au maximum $\sum |x_i\pi h|$. Il nous suffit alors de choisir un $h$ adapté au niveau de précision que nous voulons atteindre. 
 \\
-\textbf{Todo : Expliquer notre choix de h, trouver une meilleure borne?, résoudre en ampl}		
+Notons que lors de l'implémentation de notre modèle, nous faisons une deuxième approximation en calculant les diagrammes $d_i(\theta)$. Comme l'intégrale de l'équation \eqref{eq:di} n'est pas calculable analytiquement (il s'agit d'une fonction de Bessel), nous la calculons numériquement au moyen d'une somme de Rieman dans notre code Ampl.
+\textbf{Todo : Expliquer notre choix de h, trouver une meilleure borne?, résoudre en ampl}		\\
+
+\subsection{Résultats des simulations}
+Les figure \ref{fig:D-ModLin} et \ref{fig:D-ModLin-Rapproche} donnent une illustration des diagrammes optimaux obtenus pour certains paramètres. On constate que lorsque $\theta_P$ et $\theta_S$ deviennent proches, le $\epsilon$ croit.
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{D-ModLin.png}
+  \caption{}
+  \label{fig:D-ModLin}
+  \end{subfigure}%
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{D-ModLin-Rapproche.png}
+  \caption{}
+  \label{fig:D-ModLin-Rapproche}
+  \end{subfigure}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$. A gauche pour $\theta_P=50 \degree$ et $\theta_S=40 \degree$; à droite pour $\theta_P=47 \degree$ et $\theta_S=43 \degree$. En rouge, les bornes du $\epsilon$ optimal trouvé (à gauche 0.02, à droite 0.09).}
+  \end{figure}
+
+
+\subsection{Analyse de la robustesse}
+En pratique, l'implémentation des $x_i$ n'est pas réalise parfaitement. On a plutôt $\hat{x}_i = x_i(1+\xi_i)$ où les erreurs $\xi_i$ se situent dans un intervalle $[-\tau,\tau]$.\\
+Reprenons le modèle linéaire précédent 
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{D-ModLin-Robust001.png}
+  \caption{$\tau = 0.001$}
+  \label{fig:D-ModLin-Robust001}
+  \end{subfigure}%
+  ~ 
+  \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{D-ModLin-Robust01.png}
+  \caption{$\tau=0.01$}
+  \label{fig:D-ModLin-Robust01}
+  \end{subfigure}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé.}
+  \end{figure}
+
+
+
+
+
+
+
+
+
+
