@@ -1,0 +1,6 @@
+param samplesS := 50;
+param samplesP := 50;
+param N := 40;
+param ThetaP := 0.8726;
+param ThetaS := 0.6981;
+

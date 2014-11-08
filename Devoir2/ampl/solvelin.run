@@ -1,10 +1,16 @@
 reset;
 model antennalin.mod;
-data antenna.dat;
+data antenna2.dat;
 option solver cplex;
 solve;
 for{i in rings}{
-printf "%d,%d \n",i,x[i] > antennalin4050.csv;
+printf "%d,%f \n",i,x[i] > antennalin4050.csv;
+}
+for{i in rings, j in S}{
+printf "%f \n",diS[i,j] > diS.csv;
+}
+for{i in rings, j in P}{
+printf "%f \n",diP[i,j] > diP.csv;
 }
 display erreurdiagramme;
 # Resolution pour des valeurs plus proches

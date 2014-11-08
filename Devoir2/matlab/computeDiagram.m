@@ -4,12 +4,12 @@ function [S,P,diP,diS] = computeDiagram(thetaP,thetaS,r)
 %
 
 %conversion en radian : 
-thetaP = thetaP*pi/180;
-thetaS = thetaS*pi/180;
+thetaP = thetaP*pi/180
+thetaS = thetaS*pi/180
 
 N = length(r);
 m=50;
-l=50;
+l=200;
 
 diS = zeros(N,m);
 diP = zeros(N,m);
@@ -23,9 +23,10 @@ for i=1:N
         fP = 0.5*cos(2*pi*r(i)*cos(P(j))*cos(xx));
         diP(i,j) = trapz(xx,fP);
         diS(i,j) = trapz(xx,fS);
+        %diP(i,j) = (2*pi/l)*sum(0.5*cos(2*pi*r(i)*cos(S(j))*cos(xx)));
+        %diS(i,j) = (2*pi/l)*sum(0.5*cos(2*pi*r(i)*cos(P(j))*cos(xx)));
     end
 end
-
 %figure()
 %plot(P,diP(1,:));
 %figure()
