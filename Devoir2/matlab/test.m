@@ -14,11 +14,12 @@ diS(6,50);
 
 x=load('antennalin4050.csv');
 x=x(:,2);
+[err] = ComputeErrorDia(x,r,50,40,eps)
 x2=load('antennalin4050-Rapproche.csv');
 x2=x2(:,2);
-
+[err] = ComputeErrorDia(x2,r,47,43,eps)
 eps1=0.02024713577;
 eps2=0.09368302883;
 plotD(x,r,S,P,eps1,'b');
 plotD(x2,r,S,P,eps2,'g');
-saveas(gcf, 'D-ModLin' ,'png');
+%saveas(gcf, 'D-ModLin' ,'png');

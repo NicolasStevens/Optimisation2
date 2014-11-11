@@ -20,10 +20,12 @@ On a alors
 \end{eqnarray}
 
 \subsection{Analyse des résultats}
-Les figures \ref{fig:D-ModRobust1-01}, \ref{fig:D-ModRobust1-001}, \ref{fig:D-ModRobust1-testRob01} et \ref{fig:D-ModRobust1-testRob001} montrent les résultats obtenus pour différentes valeurs de $\tau$. Ici les $x$ sont conçus pour mieux résister en cas de perturbations. \\
-Dans le cas $\tau = 0.01$, on souhaite que les $x$ résiste à de plus grande perturbation, ainsi le $\epsilon$ est plus grand ($3.3 \%$) mais les perturbations sont moins dommageables (oscillations moins grandes sur la figure \ref{fig:D-ModRobust1-testRob01} que sur \ref{fig:D-ModRobust1-testRob001}).\\
-Dans le cas $\tau = 0.01$, on souhaite que les $x$ résiste à de plus petites perturbation, ainsi le $\epsilon$ est moins grand ($2.8 \%$) mais les perturbations sont plus dommageables.\\
-Notons que ce modèle est bien plus performant que le mode de base. En effet le $\epsilon$ augmente très peu $2\%$ dans le modèle de base à $2.8\%$ ou $3.3\%$ dans le modèle robuste; tandis que la robustesse s'améliore nettement.
+Les figures \ref{fig:D-ModRobust1-01}, \ref{fig:D-ModRobust1-001}, \ref{fig:D-ModRobust1-test3RobTau001} et \ref{fig:D-ModRobust1-test3RobTau01} montrent les résultats obtenus pour différentes valeurs de $\tau$ (dans le modèle ainsi que dans les perturbations). Ici les $x$ sont conçus pour mieux résister en cas de perturbations. \\
+\begin{itemize}
+ \item Dans le cas $\tau = 0.01$, on souhaite que les $x$ résiste à de plus grande perturbation, ainsi le $\epsilon$ est plus grand ($3.3 \%$ et une erreur de 0.0246 - toujours selon l'équation \ref{eq:erreurDiagramme}) mais les perturbations sont moins dommageables (oscillations moins grandes des graphes vert sur les figures \ref{fig:D-ModRobust1-test3RobTau001} et \ref{fig:D-ModRobust1-test3RobTau01}).  Si on fait des tests avec 100 réalisations des $\xi_i$ différents, on obtient une erreur moyenne de  0.0564 pour des perturbations de l'ordre de $\tau=0.001$ et 0.7847 pour des perturbations de l'ordre de $\tau=0.01$.\\
+\item Dans le cas $\tau = 0.001$, on souhaite que les $x$ résiste à de plus petites perturbation, ainsi le $\epsilon$ est moins grand ($2.8 \%$ et une erreur de  0.0249 mais les perturbations sont plus dommageables (si on fait des tests avec 100 réalisations des $\xi_i$ différents, on obtient une erreur moyenne de 0.1315 pour des perturbations de l'ordre de $\tau=0.001$ et 0.9614 pour des perturbations de l'ordre de $\tau=0.01$).\\  
+\end{itemize}
+Un récapitulatif des résultats pour les différents modèle est donné à la table \ref{table:Recap}. Notons que ces modèles sont bien plus performant que le modèle de base. En effet le $\epsilon$ augmente très peu $2\%$ dans le modèle de base à $2.8\%$ ou $3.3\%$ dans le modèle robuste; tandis que la robustesse s'améliore nettement.
 
 \begin{figure}[h!]
   \centering
@@ -33,21 +35,35 @@ Notons que ce modèle est bien plus performant que le mode de base. En effet le 
   \label{fig:D-ModRobust1-01}
   \end{subfigure}%
   ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{D-ModRobust1-testRob01.png}
-  \caption{$D(\theta)$ pour $\tau = 0.01$ et $x$ perturbés (en vert pour une perturbation de $\tau=0.01$ en bleu pour $\tau=0.001$).}
-  \label{fig:D-ModRobust1-testRob01}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
+ \begin{subfigure}[b]{0.45\textwidth}
   \includegraphics[width=\textwidth]{D-ModRobust1-001.png}
   \caption{$D(\theta)$ pour $\tau = 0.001$ et $x$ non-perturbé.}
   \label{fig:D-ModRobust1-001}
+  \end{subfigure}
+ \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{D-ModRobust1-test3RobTau001.png}
+  \caption{$D(\theta)$ pour une perturbation de $\tau = 0.001$ et $x$ perturbés (en vert pour un modèle de $\tau=0.001$ en bleu pour $\tau=0.01$).}
+  \label{fig:D-ModRobust1-test3RobTau001}
   \end{subfigure}%
   ~ 
   \begin{subfigure}[b]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{D-ModRobust1-testRob001.png}
-  \caption{$D(\theta)$ pour $\tau = 0.001$ et $x$ perturbés (en vert pour une perturbation de $\tau=0.01$ en bleu pour $\tau=0.001$).}
-  \label{fig:D-ModRobust1-testRob001}
+  \includegraphics[width=\textwidth]{D-ModRobust1-test3RobTau01.png}
+  \caption{$D(\theta)$ pour une perturbation de $\tau = 0.01$ et $x$ perturbés (en vert pour un modèle de $\tau=0.001$ en bleu pour $\tau=0.01$).}
+  \label{fig:D-ModRobust1-test3RobTau01}
   \end{subfigure}
   \caption{}
   \end{figure}
+
+\begin{table}
+\centering
+\begin{tabular}{c|c|ccc}
+ & & & \textbf{Erreurs pour : } &\\
+ & $\epsilon$ & $x_i$ non-perturbés & $x_i$ perturbés ($\tau=0.001$) & $x_i$ perturbés ($\tau=0.01$) \\
+ \hline
+Modèle de base & $2\%$ & 0.0185 & 5.3977 & 47.9054 \\
+Modèle robuste 1 ($\tau=0.001$) & $2.8 \%$ & 0.0249 & 0.1315   & 0.9614 \\
+Modèle robuste 1 ($\tau=0.01$)  & $3.3 \%$ & 0.0246 & 0.0564 & 0.7847 \\
+\end{tabular}
+\caption{Récapitulatif des résultats des erreurs et de la borne maximal $\epsilon$ obtenus pour les différents modèles et les différents types de perturbations.}
+\label{table:Recap}
+\end{table}

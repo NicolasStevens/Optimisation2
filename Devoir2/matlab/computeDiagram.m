@@ -4,8 +4,8 @@ function [S,P,diP,diS] = computeDiagram(thetaP,thetaS,r)
 %
 
 %conversion en radian : 
-thetaP = thetaP*pi/180
-thetaS = thetaS*pi/180
+thetaP = thetaP*pi/180;
+thetaS = thetaS*pi/180;
 
 N = length(r);
 m=50;

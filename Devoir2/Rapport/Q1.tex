@@ -26,9 +26,12 @@ Cette formulation est bien évidemment une formulation approchée de notre probl
 Notons que lors de l'implémentation de notre modèle, nous faisons une deuxième approximation en calculant les diagrammes $d_i(\theta)$. Comme l'intégrale de l'équation \eqref{eq:di} n'est pas calculable analytiquement (il s'agit d'une fonction de Bessel), nous la calculons numériquement au moyen d'une somme de Rieman dans notre code Ampl.
 \textbf{Todo : Expliquer notre choix de h, trouver une meilleure borne?, résoudre en ampl}		\\
 
-\subsection{Résultats des simulations}
-La figure \ref{fig:D-ModLin} donne une illustration des diagrammes optimaux obtenus pour certains paramètres. On constate que lorsque $\theta_P$ et $\theta_S$ deviennent proches, le $\epsilon$ croit.
-
+\subsection{Analyse des résultats}
+La figure \ref{fig:D-ModLin} donne une illustration des diagrammes optimaux obtenus pour certains paramètres. On constate que lorsque $\theta_P$ et $\theta_S$ deviennent proches, le $\epsilon$ croit. On remarque également que tous les points $\in \mathcal{S}$ ou $\in \mathcal{P}$ sont bien compris entre les bornes fixées par $\epsilon$; et ce malgré que nous ayons discrétisé le problème et que nous n'ayons donc pas imposer cette contrainte pour tous les points. Cela confirme l'idée que l'approximation faite est acceptable. Définissons l'erreur du diagramme $D(\theta)$ comme suit : 
+\begin{equation} \label{eq:erreurDiagramme}
+err = \int _{\mathcal{S}} |D(\theta)| d\theta + \int_{\mathcal{P}} |D(\theta) - 1| d\theta.
+\end{equation}
+On obtient 0.0185 (en bleu) et 0.0921 (vert) comme erreur moyenne pour le diagramme de la figure \ref{fig:D-ModLin}. Pour les $x$ perturbés, on obtient comme erreur moyenne 5.3977 pour les diagrammes de la figure \ref{fig:D-ModLin-RobustTau01} et 47.9054 pour les diagramme de la figure \ref{fig:D-ModLin-RobustTau01}.
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
@@ -38,9 +41,14 @@ La figure \ref{fig:D-ModLin} donne une illustration des diagrammes optimaux obte
   \end{subfigure}%
   ~ 
   \begin{subfigure}[b]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{D-ModLin-Robust.png}
-  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé ($\tau=0.001$ en bleu et $\tau = 0.01$ en vert).}
-  \label{fig:D-ModLin-Robust}
+  \includegraphics[width=\textwidth]{D-ModLin-2RobustTau01.png}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé ($\tau = 0.01$).}
+  \label{fig:D-ModLin-RobustTau01}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{D-ModLin-2RobustTau001.png}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé ($\tau=0.001$).}
+  \label{fig:D-ModLin-RobustTau001}
   \end{subfigure}
   \caption{}
   \end{figure}
