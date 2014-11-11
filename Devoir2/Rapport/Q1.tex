@@ -1,5 +1,8 @@
+On étudie le problème d'optimisation qui consiste à optimiser le diagramme $D(\theta)$ d'une antenne. Il s'agit de trouver les coefficients d'amplification $x_i$ des $N$ anneaux de l'antenne qui satisfassent aux conditions de diagramme unitaire (dans l'intervalle $\mathcal{P}=[\theta_P, 90\degree]$) ou nul (dans l'intervalle $\mathcal{S}=[0 \degree,\theta_S]$).
+
 \section{Formulation linéaire}
-On étudie le problème d'optimisation qui consiste à optimiser le diagramme $D(\theta)$ d'une antenne. Il s'agit de trouver les coefficients d'amplification $x_i$ des $N$ anneaux de l'antenne qui satisfassent aux conditions de diagramme unitaire (dans l'intervalle $\mathcal{P}=[\theta_P, 90\degree]$) ou nul (dans l'intervalle $\mathcal{S}=[0 \degree,\theta_S]$). On peut formuler le programme d'optimisation comme suit :
+\subsection{Modèle}
+On peut formuler le programme d'optimisation comme suit :
 \begin{align}
 \min_{x_i,\epsilon} \epsilon & \\
 &|D(\theta)-1|  \leq \epsilon &\forall \theta\in \mathcal{P}\\
@@ -24,45 +27,28 @@ Notons que lors de l'implémentation de notre modèle, nous faisons une deuxièm
 \textbf{Todo : Expliquer notre choix de h, trouver une meilleure borne?, résoudre en ampl}		\\
 
 \subsection{Résultats des simulations}
-Les figure \ref{fig:D-ModLin} et \ref{fig:D-ModLin-Rapproche} donnent une illustration des diagrammes optimaux obtenus pour certains paramètres. On constate que lorsque $\theta_P$ et $\theta_S$ deviennent proches, le $\epsilon$ croit.
+La figure \ref{fig:D-ModLin} donne une illustration des diagrammes optimaux obtenus pour certains paramètres. On constate que lorsque $\theta_P$ et $\theta_S$ deviennent proches, le $\epsilon$ croit.
 
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
   \includegraphics[width=\textwidth]{D-ModLin.png}
-  \caption{}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$. En bleu pour $\theta_P=50 \degree$ et $\theta_S=40 \degree$; en vert pour $\theta_P=47 \degree$ et $\theta_S=43 \degree$. En rouge, les bornes du $\epsilon$ optimal trouvé (en bleu 0.02, en vert 0.09).}
   \label{fig:D-ModLin}
   \end{subfigure}%
   ~ 
   \begin{subfigure}[b]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{D-ModLin-Rapproche.png}
-  \caption{}
-  \label{fig:D-ModLin-Rapproche}
+  \includegraphics[width=\textwidth]{D-ModLin-Robust.png}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé ($\tau=0.001$ en bleu et $\tau = 0.01$ en vert).}
+  \label{fig:D-ModLin-Robust}
   \end{subfigure}
-  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$. A gauche pour $\theta_P=50 \degree$ et $\theta_S=40 \degree$; à droite pour $\theta_P=47 \degree$ et $\theta_S=43 \degree$. En rouge, les bornes du $\epsilon$ optimal trouvé (à gauche 0.02, à droite 0.09).}
+  \caption{}
   \end{figure}
 
 
 \subsection{Analyse de la robustesse}
 En pratique, l'implémentation des $x_i$ n'est pas réalise parfaitement. On a plutôt $\hat{x}_i = x_i(1+\xi_i)$ où les erreurs $\xi_i$ se situent dans un intervalle $[-\tau,\tau]$.\\
 Reprenons le modèle linéaire précédent 
-
-\begin{figure}[h!]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{D-ModLin-Robust001.png}
-  \caption{$\tau = 0.001$}
-  \label{fig:D-ModLin-Robust001}
-  \end{subfigure}%
-  ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{D-ModLin-Robust01.png}
-  \caption{$\tau=0.01$}
-  \label{fig:D-ModLin-Robust01}
-  \end{subfigure}
-  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé.}
-  \end{figure}
-
 
 
 

@@ -13,7 +13,7 @@ x=x.*(1+xsi);
 [S,P,diP,diS] = computeDiagram(50,40,r);
 eps=0.02024713577;
 %eps=0.09368302883;
-plotD(x,r,S,P,eps,'b'); hold on;
+plotD(x,r,S,P,eps); hold on;
 
 tau=0.01;
 xsi=Genxsi(tau,N);
@@ -21,5 +21,5 @@ x=x.*(1+xsi);
 [S,P,diP,diS] = computeDiagram(50,40,r);
 eps=0.02024713577;
 %eps=0.09368302883;
-plotD(x,r,S,P,eps,'g'); 
-saveas(gcf, 'D-ModLin-Robust' ,'png');
+plotD(x,r,S,P,eps); 
+%saveas(gcf, 'D-ModLin-Robust' ,'png');

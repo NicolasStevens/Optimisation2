@@ -12,9 +12,13 @@ diS(6,50);
 %csvwrite('datadiS.csv',diS);
 %csvwrite('datadiP.csv',diP);
 
-x=load('antennalin4050-Rapproche.csv');
-x=x(:,2)
+x=load('antennalin4050.csv');
+x=x(:,2);
+x2=load('antennalin4050-Rapproche.csv');
+x2=x2(:,2);
 
-%eps=0.02024713577;
-eps=0.09368302883;
-plotD(x,r,S,P,eps);
+eps1=0.02024713577;
+eps2=0.09368302883;
+plotD(x,r,S,P,eps1,'b');
+plotD(x2,r,S,P,eps2,'g');
+saveas(gcf, 'D-ModLin' ,'png');

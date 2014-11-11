@@ -1,4 +1,4 @@
-function [] = plotD(x,r,S1,P1,eps)
+function [] = plotD(x,r,S1,P1,eps,c)
 %
 %
 %
@@ -17,16 +17,16 @@ eps3=ones(length(P1),1)+eps;
 eps4=ones(length(P1),1)-eps;
 
 
-figure()
-plot(S,DS); hold on;
-plot(P,DP); 
+
+plot(S,DS,c); hold on;
+plot(P,DP,c); 
 plot(S1,eps1,'r');
 plot(S1,eps2,'r');
 plot(P1,eps3,'r');
 plot(P1,eps4,'r');
 xlabel('Theta');
 ylabel('D(Theta)');
-title(sprintf('Diagramme Total pour epsilon=%f \n', eps))
+title(sprintf('Diagramme Total pour epsilon=%f \n', eps)); hold on;
 %saveas(gcf, 'D-ModLin-Robust01' ,'png');
 end
 
