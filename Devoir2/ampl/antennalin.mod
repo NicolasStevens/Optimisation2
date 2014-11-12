@@ -7,8 +7,8 @@ param samplesP;
 param ThetaP;
 param ThetaS;
 set rings = 1..N; # L'ensemble des anneaux
-set S = 1..samplesS; # L'ensemble des points dans S
-set P = 1..samplesP; # L'ensemble des points dans P
+set S = 0..samplesS; # L'ensemble des points dans S
+set P = 0..samplesP; # L'ensemble des points dans P
 
 param pi = 4 * atan(1);
 param mIntegral := 200;

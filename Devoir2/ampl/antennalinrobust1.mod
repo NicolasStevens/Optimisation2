@@ -6,8 +6,8 @@ param N;
 param samplesS;
 param samplesP;
 set rings = 1..N; # L'ensemble des anneaux
-set S = 1..samplesS; # L'ensemble des points dans S
-set P = 1..samplesP; # L'ensemble des points dans P
+set S = 0..samplesS; # L'ensemble des points dans S
+set P = 0..samplesP; # L'ensemble des points dans P
 param ThetaP;
 param ThetaS;
 

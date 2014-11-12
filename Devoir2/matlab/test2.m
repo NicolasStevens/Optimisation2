@@ -5,7 +5,6 @@ for i=1:N
 end
 
 x=load('antennalin4050.csv');
-x=x(:,2);
 
 nbXsi=5;
 err=zeros(nbXsi,1);
@@ -15,7 +14,7 @@ tau=0.001;
 xsi=Genxsi(tau,N);
 x=x.*(1+xsi);
 [S,P,diP,diS] = computeDiagram(50,40,r);
-eps=0.02024713577;
+eps=0.024;
 %eps=0.09368302883;
 plotD(x,r,S,P,eps,'g'); hold on;
 err(i) = ComputeErrorDia(x,r,50,40,eps);
@@ -29,7 +28,7 @@ tau=0.01;
 xsi=Genxsi(tau,N);
 x=x.*(1+xsi);
 [S,P,diP,diS] = computeDiagram(50,40,r);
-eps=0.02024713577;
+eps=0.024;
 %eps=0.09368302883;
 plotD(x,r,S,P,eps,'b'); 
 err2(i) = ComputeErrorDia(x,r,50,40,eps);

@@ -13,12 +13,12 @@ r=ones(N,1);
 for i=1:N
    r(i)=i/10; 
 end
-eps1=0.0498374;
-eps2=0.0669278;
+eps1=0.0422784;
+eps2=0.0572069;
 figure()
 plotD(x,r,S,P,eps1,'b');
 plotD(x2,r,S,P,eps2,'g');
-saveas(gcf, 'D-ModRobust1-001' ,'png');
+%saveas(gcf, 'D-ModRobust1-001' ,'png');
 errN001 = ComputeErrorDia(x,r,50,40,eps1)
 errN01 = ComputeErrorDia(x2,r,50,40,eps2)
 

@@ -3,6 +3,6 @@ param samplesP := 50;
 param N := 40;
 #param ThetaP := 0.8226;
 #param ThetaS := 0.7481;
-param ThetaP := 0.8726;
+param ThetaP := 0.8726; #en radian
 param ThetaS := 0.6981;
 

@@ -31,21 +31,22 @@ La figure \ref{fig:D-ModLin} donne une illustration des diagrammes optimaux obte
 \begin{equation} \label{eq:erreurDiagramme}
 err = \int _{\mathcal{S}} |D(\theta)| d\theta + \int_{\mathcal{P}} |D(\theta) - 1| d\theta.
 \end{equation}
-On obtient 0.0185 (en bleu) et 0.0921 (vert) comme erreur moyenne pour le diagramme de la figure \ref{fig:D-ModLin}. Pour les $x$ perturbés, on obtient comme erreur moyenne 5.3977 pour les diagrammes de la figure \ref{fig:D-ModLin-RobustTau01} et 47.9054 pour les diagramme de la figure \ref{fig:D-ModLin-RobustTau01}.
+On obtient 0.0209 (en bleu) et 0.1151 (vert) comme erreur pour les diagrammes de la figure \ref{fig:D-ModLin}. Pour les $x$ perturbés, on obtient comme erreur moyenne 6.5605 pour les diagrammes de la figure \ref{fig:D-ModLin-RobustTau01} et 64.6476 pour les diagrammes de la figure \ref{fig:D-ModLin-RobustTau01}.
 \begin{figure}[h!]
   \centering
-  \begin{subfigure}[b]{0.45\textwidth}
+  \begin{subfigure}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{D-ModLin.png}
-  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$. En bleu pour $\theta_P=50 \degree$ et $\theta_S=40 \degree$; en vert pour $\theta_P=47 \degree$ et $\theta_S=43 \degree$. En rouge, les bornes du $\epsilon$ optimal trouvé (en bleu 0.02, en vert 0.09).}
+  \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$. En bleu pour $\theta_P=50 \degree$ et $\theta_S=40 \degree$; en vert pour $\theta_P=47 \degree$ et $\theta_S=43 \degree$. En rouge, les bornes du $\epsilon$ optimal trouvé (en bleu $2.4 \%$, en vert $11.9 \%$).}
   \label{fig:D-ModLin}
   \end{subfigure}%
   ~ 
-  \begin{subfigure}[b]{0.45\textwidth}
+  \begin{subfigure}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{D-ModLin-2RobustTau01.png}
   \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé ($\tau = 0.01$).}
   \label{fig:D-ModLin-RobustTau01}
   \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
+   ~ 
+  \begin{subfigure}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{D-ModLin-2RobustTau001.png}
   \caption{Diagramme optimal $D(\theta)$ de l'antenne composé de 40 anneaux, pour $r_i=i/10$, $\theta_P=50 \degree$ et $\theta_S=40 \degree$ avec un vecteur $x$ perturbé ($\tau=0.001$).}
   \label{fig:D-ModLin-RobustTau001}

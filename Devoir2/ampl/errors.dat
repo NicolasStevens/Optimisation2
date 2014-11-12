@@ -1,2 +1,3 @@
-param tau = 0.001;
-param h = 0.04;
+param tau = 0.01;
+#param h = 0.04;
+param h = 2;
