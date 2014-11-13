@@ -1,0 +1,10 @@
+reset;
+model antennalinrobust1.mod;
+data antenna2.dat;
+data errors.dat;
+option solver cplex;
+solve;
+for{i in rings}{
+printf "%f \n",x[i] > antennarobust1Tau01Last.csv;
+}
+display erreurdiagramme;

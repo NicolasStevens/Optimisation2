@@ -1,0 +1,6 @@
+reset;
+model antennalinrobust1.mod;
+data antennatau001.dat;
+option solver cplex;
+solve;
+printf "%d,%d \n",rings,x[rings] > antennalintau001.csv;
