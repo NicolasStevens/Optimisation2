@@ -8,7 +8,7 @@ thetaP = thetaP*pi/180;
 thetaS = thetaS*pi/180;
 
 N = length(r);
-m=50;
+m=51;
 l=200;
 
 diS = zeros(N,m);
