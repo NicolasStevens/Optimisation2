@@ -12,12 +12,12 @@ set P = 0..samplesP; # L'ensemble des points dans P
 
 param pi = 4 * atan(1);
 param mIntegral := 200;
-set Integral := 1..mIntegral;
+set Integral := 0..(mIntegral-1);
 
 # Valeurs echantillonnee des di dans S
-param diS{i in rings,j in S} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(j*ThetaS/samplesS)*cos(2*pi*k/mIntegral))); 
+param diS{i in rings,j in S} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(j*(ThetaS*pi/180)/samplesS)*cos(2*pi*k/mIntegral))); 
 # Valeurs echantillonnee des di dans P
-param diP{i in rings,j in P} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(ThetaP + j*(pi/2 - ThetaP)/samplesP)*cos(2*pi*k/mIntegral)));; 
+param diP{i in rings,j in P} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos((ThetaP*pi/180) + j*(pi/2 - (ThetaP*pi/180))/samplesP)*cos(2*pi*k/mIntegral)));; 
 
 #somme de Rieman
 #for{i in rings, j in P} {
