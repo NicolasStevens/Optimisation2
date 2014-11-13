@@ -18,4 +18,4 @@ eps1=0.0235439;
 eps2=0.119491;
 plotD(x,r,S,P,eps1,'b');
 plotD(x2,r,S,P,eps2,'g');
-saveas(gcf, 'D-ModLin' ,'png');
+%saveas(gcf, 'D-ModLin' ,'png');

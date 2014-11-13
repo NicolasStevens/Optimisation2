@@ -1,10 +1,10 @@
 reset;
-model antennalinrobust1.mod;
+model antennaNonLin.mod;
 data antenna2.dat;
 data errors.dat;
-option solver cplex;
+option solver knitro;
 solve;
 for{i in rings}{
-printf "%f \n",x[i] > antennarobust1Tau01Last.csv;
+printf "%f \n",x[i] > antennarobust1TESTTEST.csv;
 }
 display erreurdiagramme;
