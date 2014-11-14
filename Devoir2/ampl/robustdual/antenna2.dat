@@ -1,8 +1,7 @@
-param samplesS := 50;
-param samplesP := 50;
+param samplesS := 100;
+param samplesP := 100;
 param N := 40;
-#param ThetaP := 0.8226;
-#param ThetaS := 0.7481;
-param ThetaP := 0.8726; #en radian
-param ThetaS := 0.6981;
+
+param ThetaP := 50; 
+param ThetaS := 40;
 

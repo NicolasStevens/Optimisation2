@@ -13,12 +13,12 @@ param ThetaS;
 
 param pi = 4 * atan(1);
 param mIntegral := 200;
-set Integral := 1..mIntegral;
+set Integral := 0..(mIntegral-1);
 
 # Valeurs echantillonnee des di dans S
-param diS{i in rings,j in S} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(j*ThetaS/samplesS)*cos(2*pi*k/mIntegral))); 
+param diS{i in rings,j in S} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(j*(ThetaS*pi/180)/samplesS)*cos(2*pi*k/mIntegral))); 
 # Valeurs echantillonnee des di dans P
-param diP{i in rings,j in P} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(ThetaP + j*(pi/2 - ThetaP)/samplesP)*cos(2*pi*k/mIntegral)));; 
+param diP{i in rings,j in P} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos((ThetaP*pi/180) + j*(pi/2 - (ThetaP*pi/180))/samplesP)*cos(2*pi*k/mIntegral)));; 
 
 param tau;
 
@@ -36,10 +36,10 @@ var epsilon, >=0;
 
 minimize erreurdiagramme : epsilon;
 
-subject to dualConstraint1{i in rings, s in S} : y1plus[i,s] - y1minus[i,s] = diS[i,s]*x[i];
+subject to dualConstraint1{i in rings, s in S} : y1plus[i,s] - y1minus[i,s] = -diS[i,s]*x[i];
 subject to dualConstraint2{i in rings, s in S} : y2plus[i,s] - y2minus[i,s] = diS[i,s]*x[i];
 subject to dualConstraint3{i in rings, p in P} : y3plus[i,p] - y3minus[i,p] = diP[i,p]*x[i];
-subject to dualConstraint4{i in rings, p in P} : y4plus[i,p] - y4minus[i,p] = diP[i,p]*x[i];
+subject to dualConstraint4{i in rings, p in P} : y4plus[i,p] - y4minus[i,p] = -diP[i,p]*x[i];
 
 subject to S1{s in S}: sum{i in rings} (tau*(y1plus[i,s]+y1minus[i,s])+ diS[i,s]*x[i]) <= epsilon;
 subject to S2{s in S}: sum{i in rings} (tau*(y2plus[i,s]+y2minus[i,s])- diS[i,s]*x[i]) <= epsilon;
