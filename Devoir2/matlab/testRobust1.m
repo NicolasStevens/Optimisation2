@@ -34,9 +34,11 @@ err12=zeros(100,1);
 err21=zeros(100,1);
 err22=zeros(100,1);
 
-figure()
-for i=1:10
 tau=0.001;
+figure()
+for i=1:100
+x=load('antennarobust1Tau001NEW.csv');
+x2=load('antennarobust1Tau01NEW.csv');
 xsi=Genxsi(tau,N);
 x=x.*(1+xsi);
 x2=x2.*(1+xsi);
@@ -50,10 +52,11 @@ end
 title('x perturbed with tau=0.001');
 %saveas(gcf, 'D-ModRobust1-test3Rob001' ,'png');
 
-
-figure()
-for i=1:10
 tau=0.01;
+figure()
+for i=1:100
+x=load('antennarobust1Tau001NEW.csv');
+x2=load('antennarobust1Tau01NEW.csv');
 xsi=Genxsi(tau,N);
 x=x.*(1+xsi);
 x2=x2.*(1+xsi);

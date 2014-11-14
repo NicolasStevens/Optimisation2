@@ -5,22 +5,7 @@ data errors.dat;
 option solver cplex;
 solve;
 for{i in rings}{
-printf "%f \n",x[i] > antennarobust1Tau01NEW.csv;
-}
-
-for{i in rings, j in S}{
-printf "%f \n",diS[i,j] > diS.csv;
-}
-for{i in rings, j in P}{
-printf "%f \n",diP[i,j] > diP.csv;
-}
-
-for{j in S}{
-printf "%f \n",(j*(ThetaS*pi/180)/samplesS) > S.csv;
-}
-
-for{j in P}{
-printf "%f \n",((ThetaP*pi/180) + j*(pi/2 - (ThetaP*pi/180))/samplesP) > P.csv;
+printf "%f \n",x[i] > antennarobust1Tau001NEW.csv;
 }
 
 display erreurdiagramme;

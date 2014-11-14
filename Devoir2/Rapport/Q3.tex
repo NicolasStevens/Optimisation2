@@ -29,10 +29,9 @@ Pour notre problème échantillonné et linéaire, il nous faut donc introduire 
 \subsection{Analyse des résultats}
 Les figures \ref{fig:D-ModRobust1}, \ref{fig:D-ModRobust1-test3RobTau001} et \ref{fig:D-ModRobust1-test3RobTau01} montrent les résultats obtenus pour différentes valeurs de $\tau$ (dans le modèle ainsi que dans les perturbations). Ici les $x$ sont conçus pour mieux résister en cas de perturbations. Un récapitulatif des résultats pour les différents modèle est donné à la table \ref{table:Recap}. Notons que ces modèles sont bien plus performant que le modèle de base. En effet le $\epsilon$ augmente très peu $2\%$ dans le modèle de base à $2.8\%$ ou $3.3\%$ dans le modèle robuste; tandis que la robustesse s'améliore nettement.\\
 \begin{itemize}
-\item Dans le cas $\tau = 0.001$, on constate une augmentation du $\epsilon$ par rapport au modèle de base. Les erreurs pour les $x_i$ perturbés sont cependant bien moindre. On constate également que les erreurs pour le modèle $x_i$ perturbés avec ue perturbation de l'ordre de $\tau=0.001$ sont moindre que dans le modèle avec $\tau=0.01$.\\ 
- \item Dans le cas $\tau = 0.01$, on constate toujours une augmentation du $\epsilon$ par rapport au modèle de base et au modèle où $\tau = 0.001$. Les erreurs pour les $x_i$ perturbés sont moindre que dans le modèle $\tau=0.001$ pour des perturbations de l'ordre de $\tau = 0.01$.
+\item Dans le cas $\tau = 0.001$, on constate une augmentation du $\epsilon$ par rapport au modèle de base. Les erreurs pour les $x_i$ perturbés sont cependant bien moindre. On constate également que les erreurs pour le modèle $x_i$ perturbés avec une perturbation de l'ordre de $\tau=0.001$ ou de $\tau = 0.01$ sont moindre que dans le modèle avec $\tau=0.01$. Mais malgré que les erreurs soient moindre que dans le modèle $\tau = 0.01$ même dans le cas où les perturbations sont de l'ordre de $\tau =0.01$, on  observe des dépassements pour certaines réalisation des $\xi_i$ si on applique les perturbations de $\tau=0.01$. On constate que l'ordre de grandeur des $x_i$ non-nuls est inférieur à celui du modèle de base ce qui confirme notre intuition comme quoi le modèle robuste a tendance à fournir des $x_i$ plus petits.\\ 
+ \item Dans le cas $\tau = 0.01$, on constate toujours une augmentation du $\epsilon$ par rapport au modèle de base et au modèle où $\tau = 0.001$. Les erreurs pour les $x_i$ perturbés sont plus grande que dans le modèle $\tau=0.001$ pour des perturbations de l'ordre de $\tau = 0.001$ et $\tau=0.01$, mais le modèle ne présente jamais de dépassement. On constate que l'ordre de grandeur des $x_i$ non-nuls est inférieur à celui du modèle $\tau=0.001$, ce qui confirme encore notre intuition.
 \end{itemize}
-Bref, les deux modèle robustes se comporte le mieux pour les perturbations auxquelles ils sont sensés résister.
 
 \begin{figure}[h!]
   \centering
@@ -52,18 +51,18 @@ Bref, les deux modèle robustes se comporte le mieux pour les perturbations auxq
   \caption{$D(\theta)$ pour une perturbation de $\tau = 0.01$ sur les $x$ (en vert pour un modèle de $\tau=0.01$ en bleu pour $\tau=0.001$).}
   \label{fig:D-ModRobust1-test3RobTau01}
   \end{subfigure}
-  \caption{}
+  \caption{Les deux derniers graphes sont donnés pour une centaine de réalisations des $\xi_i$.}
   \end{figure}
 
 \begin{table}
 \centering
-\begin{tabular}{c|c|ccc}
- & & & \textbf{Erreurs pour : } &\\
- & $\epsilon$ & $x_i$ non-perturbés & $x_i$ perturbés ($\tau=0.001$) & $x_i$ perturbés ($\tau=0.01$) \\
+\begin{tabular}{c|c|c|ccc}
+ & & &  &\textbf{Erreurs pour : } &\\
+ & $\epsilon$ & $\mathcal{O}( x_i)$ ($x_i\neq0$ &$x_i$ & $x_i$ pert. ($\tau=0.001$) & $x_i$ pert. ($\tau=0.01$) \\
  \hline
-Modèle de base & $2\%$ & 0.0185 & 5.3977 & 47.9054 \\
-Modèle robuste 1 ($\tau=0.001$) & $5.0 \%$ & 0.0398 & 0.0479   & 0.2024 \\
-Modèle robuste 1 ($\tau=0.01$)  & $6.7 \%$ & 0.0505 & 0.0508& 0.0628 \\
+Modèle de base & $2\%$ & $10^3$ &0.0185 & 5.3977 & 47.9054 \\
+Modèle robuste 1 ($\tau=0.001$) & $5.07 \%$ & $10^0$& 0.0396 & 0.0396  & 0.0440 \\
+Modèle robuste 1 ($\tau=0.01$)  & $6.80 \%$ &$10^{-1}$ &0.0508 & 0.0508 & 0.0510 \\
 \end{tabular}
 \caption{Récapitulatif des résultats des erreurs et de la borne maximal $\epsilon$ obtenus pour les différents modèles et les différents types de perturbations.}
 \label{table:Recap}
