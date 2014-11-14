@@ -57,7 +57,7 @@ On obtient 0.0209 (en bleu) et 0.1151 (vert) comme erreur pour les diagrammes de
 
 \subsection{Analyse de la robustesse}
 En pratique, l'implémentation des $x_i$ n'est pas réalise parfaitement. On a plutôt $\hat{x}_i = x_i(1+\xi_i)$ où les erreurs $\xi_i$ se situent dans un intervalle $[-\tau,\tau]$.\\
-Reprenons le modèle linéaire précédent 
+Reprenons le modèle linéaire précédent et appliquons-lui des erreurs $xi_i$ de l'ordre de $\tau=0.001$ et $\tau=0.01$. On obtient les graphes aux figures \ref{fig:D-ModLin-RobustTau01} et \ref{fig:D-ModLin-RobustTau001}. On a donc une solution très sensible aux perturbations. Une valeur des erreurs sont données aux tableau récapitulatif \ref{table:Recap}. Ce tableau nous donne aussi une indication sur l'ordre de grandeur des $x_i$. Ils sont très élevé dans notre cas. Intuitivement, un grand $x_i$ positif vient compenser un grand $x_i$ négatif... dés qu'on perturbe ces valeurs des $x$, on a directement de grandes erreurs. On peut supposer qu'on modèle plus robuste consisterait à réduire ces valeurs ces $x_i$.
 
 
 
