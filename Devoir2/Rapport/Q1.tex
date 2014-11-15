@@ -11,23 +11,16 @@ Nous étudierons plusieurs modélisations possible de ce problème et les compar
 \newpage
 \section{Formulation linéaire}
 \subsection{Modèle}
-On peut formuler le programme d'optimisation comme suit :
+Le problème posé présente un désavantage majeur; il est soumis à une infinité de contraintes.\\
+Pour pallier à ce problème, nous échantillonnons le problème par rapport à $\theta$ sur $P = [\theta_P\: 90\degres  ]$ et $S = [0\degres \:\theta_S]$. Nous avons ainsi un nombre fini de contraintes. Afin d'obtenir que des contraintes linéaires, nous transformons chaque contrainte faisant intervenir une valeur absolue en deux contraintes linéaires. On peut alors formuler le programme d'optimisation comme suit :
 \begin{align}
 \min_{x_i,\epsilon} \epsilon & \\
-&|D(\theta)-1|  \leq \epsilon &\forall \theta\in \mathcal{P}\\
-&|D(\theta)| \leq \epsilon & \forall \theta\in \mathcal{S}\label{conS}\\
-& \epsilon \geq 0\\
-\text{avec } D(\theta) = \sum_{i=1}^N x_i d_i(\theta) & \text{ et } d_i(\theta) = \int_0^{2 \pi} cos(2 \pi r_i cos(\theta)cos(\phi)) d\phi \label{eq:di}
-\end{align}
-Le problème posé présente un désavantage majeur; il est soumis à une infinité de contraintes (\ref{conS}).\\
-Pour pallier à ce problème, nous échantillonnons le problème par rapport à $\theta$ sur $P = [\theta_P\: 90\degres  ]$ et $S = [0\degres \:\theta_S]$. Nous avons ainsi un nombre fini de contraintes. Afin d'obtenir que des contraintes linéaires, nous transformons chaque contrainte faisant intervenir une valeur absolue en deux contraintes linéaires. 
-\begin{align}
-\min_{x_i,\epsilon} \epsilon & & \nonumber\\
-& D(\theta)-1\leq \epsilon & \forall \theta\in \mathcal{P}_e \\
-& -D(\theta)+1\leq \epsilon & \forall \theta\in \mathcal{P}_e\\
-& D(\theta)\leq \epsilon & \forall \theta\in \mathcal{S}_e\\
-& -D(\theta)\leq \epsilon &\forall \theta\in \mathcal{S}_e\\
-\text{avec } D(\theta) = \sum_{i=1}^N x_i d_i(\theta) & \text{ et } d_i(\theta) = \int_0^{2 \pi} cos(2 \pi r_i cos(\theta)cos(\phi)) d\phi 
+ D(\theta)-1 &\leq \epsilon & \forall \theta\in \mathcal{P}_e \\
+ -D(\theta)+1&\leq \epsilon & \forall \theta\in \mathcal{P}_e\\
+ D(\theta) &\leq \epsilon & \forall \theta\in \mathcal{S}_e\\
+ -D(\theta) &\leq \epsilon &\forall \theta\in \mathcal{S}_e\\
+ \epsilon &\geq 0\\
+\text{avec } D(\theta) = \sum_{i=1}^N x_i d_i(\theta) & \text{ et } d_i(\theta) = \int_0^{2 \pi} cos(2 \pi r_i cos(\theta)cos(\phi)) d\phi \label{eq:di} &
 \end{align}
 $\mathcal{P}_e = \left\lbrace p_0,p_1,...,p_{Np}\right\rbrace$ et $\mathcal{S}_e= \left\lbrace s_0,s_1,...,s_{Ns}\right\rbrace$ sont les ensembles des échantillons dans $\mathcal{P}$ et $\mathcal{S}$. Deux points consécutifs sont séparés par une distance maximale de $h$.\\
 Cette formulation est bien évidemment une formulation approchée de notre problème initial puisque des points entre les échantillons pourront ne pas satisfaire les contraintes de diagramme unitaire ou nul. Cependant le non-respect de ces contraintes peut être quantifié. En effet, d'après les définitions des $d_i(\theta)$, la valeur absolue de la dérivée de ceux-ci ne peut pas dépasser $\pi$. Ce qui signifie que le dépassement de l'erreur de diagramme est au maximum $\sum |x_i\pi h|$. Il nous suffit alors de choisir un $h$ adapté au niveau de précision que nous voulons atteindre. 
