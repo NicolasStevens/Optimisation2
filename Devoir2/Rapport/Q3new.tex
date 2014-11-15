@@ -4,10 +4,10 @@
 Afin de prendre en compte les erreurs sur les facteurs d'amplification $x_i$, nous utilisons les valeurs maximales des variations possibles de $\hat{D(\theta)}$ en chaque point de notre discrétisation. Nous imposons que malgré ces variations nous restons dans les intervalles voulus. On transforme par exemple la première contrainte $D(\theta)\leq \epsilon$ du modèle non robuste :
 \begin{eqnarray*}
 d(\theta)^T (x.*(1+\xi)) \leq \epsilon \\ 
-d(\theta)^T (x.*\xi) \leq \epsilon- d(\theta)^T x
+dx(\theta)^T (\xi) \leq \epsilon- d(\theta)^T x
 \end{eqnarray*}
-Où $d(\theta)$ est le vecteur colonne contenant les $d_i(\theta)$.
-Nous cherchons à ce que notre optimum $(x,\epsilon)$ soit valable dans le pire cas, c'est-à-dire pour cette contrainte celui où $d(\theta)^T (x.*\xi)$ est maximum. Nous formulons donc un problème de maximisation : 
+Où $d(\theta)$ est le vecteur colonne contenant les $d_i(\theta)$ et $dx(\theta)$ le produit élément par élément de $d(\theta)$ avec $x$.
+Nous cherchons à ce que notre optimum $(x,\epsilon)$ soit valable dans le pire cas, c'est-à-dire pour cette contrainte celui où $d(\theta)^T (x.*\xi)$ est maximum. Comme nous imposons également que $|\xi_i|\leq \tau$ nous formulons un problème de maximisation linéaire et imposons une condition sur son objectif: 
 \begin{eqnarray*}
 \max_{\xi_i} d(\theta)^T\xi x & \leq & \epsilon- d(\theta)^T x \\
 \xi_i & \leq & \tau \\
@@ -35,7 +35,7 @@ On peut alors revenir à notre problème de base dans lequel on remplace la cont
 On traduit de la même manière les autres contraintes. On obtient alors le modèle suivant :
 
 \begin{eqnarray*}
-\min_{y_1+,y_1-,y_2+,y_2-,y_3+,y_3-,y_4+,y_4-} \epsilon & & \\
+\min_{x,\epsilon ,y_1+,y_1-,y_2+,y_2-,y_3+,y_3-,y_4+,y_4-} \epsilon & & \\
 y_{i+} & \geq & 0 \\
 y_{i-} & \geq & 0 \\
 (I,-I)
@@ -60,6 +60,7 @@ d_n(\theta)x_n
 \forall \theta \in P_e & &
 \end{eqnarray*}
 Cette formulation introduit $8N$ variables supplémentaires par rapport au modèle de base
+%TODO : Pourquoi le solver utilise des itérations barrier et pas des simplexes?
 \FloatBarrier
 \subsection{Analyse des résultats}
 Les figures \ref{fig:D-ModRobust1}, \ref{fig:D-ModRobust1-test3RobTau001} et \ref{fig:D-ModRobust1-test3RobTau01} montrent les résultats obtenus pour différentes valeurs de $\tau$ (dans le modèle ainsi que dans les perturbations). Ici les $x$ sont conçus pour mieux résister en cas de perturbations. Un récapitulatif des résultats pour les différents modèle est donné à la table \ref{table:Recap}. Notons que ces modèles sont bien plus performant que le modèle de base. En effet le $\epsilon$ augmente très peu $2\%$ dans le modèle de base à $2.8\%$ ou $3.3\%$ dans le modèle robuste; tandis que la robustesse s'améliore nettement.\\

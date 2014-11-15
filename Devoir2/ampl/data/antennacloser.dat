@@ -1,0 +1,7 @@
+param samplesS := 50;
+param samplesP := 50;
+param N := 40;
+param ThetaP :=0.83776; #55 deg en radians
+param ThetaS := 0.73304; #45 deg en radians
+#param ThetaP := 0.95993; #55 deg en radians
+#param ThetaS := 0.78540; #45 deg en radians

@@ -9,6 +9,7 @@ nint = 200;
 thetaS = thetaS*pi/180;
 thetaP = thetaP*pi/180;
 theta = linspace(0,pi/2,m);
+%[S,P,diP,diS] = computeDiagram(45,45,r);
 xx = linspace(0,2*pi,nint);
 for i=1:N
     for j=1:m
@@ -23,6 +24,8 @@ eps1=zeros(m,1)+eps;
 eps2=zeros(m,1)-eps;
 eps3=ones(m,1)+eps;
 eps4=ones(m,1)-eps;
+
+
 
 plot(theta,D,c); hold on;
 S1 = linspace(0,thetaS,m);

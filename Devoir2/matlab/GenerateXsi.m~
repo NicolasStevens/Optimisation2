@@ -1,0 +1,11 @@
+
+tau1=0.001;
+tau2=0.01;
+
+xsi1 = 2*tau1*rand(40,100)-tau1;
+xsi2 = 2*tau2*rand(40,100)-tau2;
+
+
+csvwrite('xsi_tau001.csv',xsi1);
+csvwrite('xsi_tau01.csv',xsi2);
+

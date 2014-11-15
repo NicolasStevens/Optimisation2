@@ -1,7 +1,0 @@
-param samplesS := 100;
-param samplesP := 100;
-param N := 40;
-
-param ThetaP := 50; 
-param ThetaS := 40;
-

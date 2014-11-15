@@ -1,0 +1,14 @@
+reset;
+model antennarobustconic.mod;
+data ../data/antenna.dat;
+option solver cplex;
+let tau:=0.001;
+solve;
+for{i in rings}{
+printf "%f \n",x[i] > ../../res/antennarobustconicTau0001.csv;
+}
+let tau:=0.01;
+solve;
+for{i in rings}{
+printf "%f \n",x[i] > ../../res/antennarobustconicTau001.csv;
+}

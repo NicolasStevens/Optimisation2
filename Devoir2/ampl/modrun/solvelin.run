@@ -1,0 +1,16 @@
+reset;
+model antennalin.mod;
+data ../data/antenna.dat;
+option solver cplex;
+solve;
+for{i in rings}{
+printf "%f \n",x[i] > ../../res/antennalin4050.csv;
+}
+# Resolution pour des valeurs plus proches
+reset;
+model antennalin.mod;
+data ../data/antennacloser.dat;
+solve;
+for{i in rings}{
+printf "%f \n",x[i] > ../../res/antennalin4248.csv;
+}

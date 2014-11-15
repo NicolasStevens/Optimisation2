@@ -1,0 +1,7 @@
+N = 40;
+Cn = pi^(n/2)/gamma(n/2+1);
+finalProbability = 0,99;
+tau = 0.01;
+funhandle = @(x) Cn*tau^n*(1-2^(n-1)*betainc(x,n+1/2,1/2);
+res = fzero(funhandle,[0 (n*tau^2-tau^2)/(n*tau^2)]);
+gamma = sqrt((tau^2)/(1-res))
