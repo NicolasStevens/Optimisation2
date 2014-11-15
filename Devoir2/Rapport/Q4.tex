@@ -21,12 +21,13 @@ On s'attend donc à de meilleurs résultats car les zones de $\mathbb{R}_N$ où 
 On peut à nouveau reprendre les contraintes du primal et reformuler un problème d'optimisation, conique cette fois. On écrit à nouveau une paire primal dual :
 \begin{center}
 \begin{minipage}{0.4\textwidth}
-\begin{eqnarray}
-\max_{\xi} dx^T \xi & \leq & \epsilon - d(\theta)^Tx \nonumber \\
-\begin{pmatrix}t \\ \xi \end{pmatrix} & \in  & \mathbb{L}_{R^{n+1}} \nonumber \\ 
+\begin{align*}
+\max_{\xi} dx^T \xi & \leq \epsilon - d(\theta)^Tx \nonumber \\
+\begin{pmatrix}t \\ \xi \end{pmatrix} & \in   \mathbb{L}_{R^{n+1}} \nonumber \\ 
 t = \gamma \nonumber
-\end{eqnarray}
+\end{align*}
 \end{minipage}
+$\Leftrightarrow _{Dual}$
 \begin{minipage}{0.4\textwidth}
 \begin{eqnarray*}
 \min_{y} \gamma^2 y & \leq & \epsilon - d(\theta)^Tx \\
@@ -71,7 +72,9 @@ d_n(\theta)x_n(\theta)
 \end{center}
 
 \subsection{Analyse des résultats}
-La figure \ref{fig:D-ModCon} montre nos résultats pour différents types de perturbation. On constate que notre modèle résiste aux perturbations mais qu'un nombre non-négligeable de réalisations de $\hat{D(\theta)}$ dépasse les bornes imposées. Celà est sans doute du à l'approximation que nous avons faite pour calculer la valeur de $\gamma$.
+La figure \ref{fig:D-ModCon} montre nos résultats pour différents types de perturbation. On constate que notre modèle résiste aux perturbations mais qu'un nombre non-négligeable de réalisations de $\hat{D(\theta)}$ dépasse les bornes imposées. Celà est sans doute du à l'approximation que nous avons faite pour calculer la valeur de $\gamma$.\\
+La table \ref{table:Recap} reprend les résultats obtenus pour ce modèle conique. L'ordre de grandeur des $x$ est plus grande que dans le modèle robuste précédent, cependant, notons que dans ce cas ci, tous les $x$ sont non-nuls, tandis que dans les modèle robuste précédent, beaucoup de $x$ étaient nul. On a donc ici une meilleure diversification des $x$. Ainsi une perturbation sur un $x$ aura moins d'impact. \\
+On constate que le $\epsilon$ est moindre que dans le modèle robuste précédent (ce qui était l'objectif de ce nouveau modèle). On constate aussi dans la table \ref{table:Recap} que les erreurs sont moins grandes (du moins pour les perturbations prévue par le modèle, donc pas dans le cas où on applique des perturbations de l'ordre de $\tau=0.01$ au modèle $\tau=0.001$). Par contre Les figures \ref{fig:D-ModCon} présente des dépassements. Celà est logique vu qu'on voulait un modèle plus précis dans la majorité des cas (donc erreur moyenne plus petite et $\epsilon$ plus petit) mais il reste certains cas où il y a dépassement.
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.32\textwidth}
@@ -81,6 +84,7 @@ La figure \ref{fig:D-ModCon} montre nos résultats pour différents types de per
  \begin{subfigure}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{D-ModRobustCon-tau0001.png}
   \end{subfigure}
+  ~ 
   \begin{subfigure}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{D-ModRobustCon-tau001.png}
   \end{subfigure}
