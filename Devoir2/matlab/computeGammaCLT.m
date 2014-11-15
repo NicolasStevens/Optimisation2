@@ -9,6 +9,6 @@ function [gamma] = computeGammaCLT(probability,tau,N)
 		tau = 0.01;
 	end
 	mu = tau^2/3;
-	sigma = tau^4*(1/5-1/9);
-	gamma = sqrt(norminv(probability,N*mu,sqrt(N)*sigma));
+	sigma2 = tau^4*(1/5-1/9);
+	gamma = sqrt(norminv(probability,N*mu,sqrt(N*sigma2)));
 end

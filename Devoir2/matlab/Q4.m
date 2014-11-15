@@ -15,8 +15,8 @@ x0001=load('../res/antennarobustconicTau0001.csv');
 x001=load('../res/antennarobustconicTau001.csv');
 
 %% X non-perturbés
-eps1=0.03391505184;
-eps2=0.04371973912;
+eps1=0.03425261558;
+eps2=0.04922494677;
 figure();
 plotD(x0001,r,di,thetaS,thetaP,eps1,'b');
 plotD(x001,r,di,thetaS,thetaP,eps2,'g');
