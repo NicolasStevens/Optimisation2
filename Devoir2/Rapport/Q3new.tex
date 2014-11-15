@@ -8,10 +8,11 @@ d(\theta)^T (x.*(1+\xi)) \leq \epsilon \Longleftrightarrow d(\theta)^T (x.*\xi) 
 %Où $d(\theta)$ est le vecteur colonne contenant les $d_i(\theta)$ et $dx(\theta)$ le produit élément par élément de $d(\theta)$ avec $x$.
 Nous cherchons à ce que notre optimum $(x,\epsilon)$ soit valable dans le pire cas, c'est-à-dire pour cette contrainte celui où $d(\theta)^T (x.*\xi)$ est maximum. Comme nous imposons également que $|\xi_i|\leq \tau$ nous formulons un problème de maximisation linéaire et imposons une condition sur son objectif: 
 \begin{align*}
-\max_{\xi_i} d(\theta)^T (x.*\xi)  & \leq  \epsilon- d(\theta)^T x \\
+\max_{\xi_i} d(\theta)^T (x.*\xi)  & \leq \epsilon- d(\theta)^T x \\
 \xi_i & \leq \tau \\
 -\xi_i & \leq \tau 
-\end{align*}
+\end{align*} 
+
 Nous avons donc un problème d'optimisation dont l'optimum sera inférieur à $\epsilon- d(\theta)^T x $. On peut mettre ce problème sous forme duale. Par dualité forte on sait que l'objectif optimal de ce problème dual sera le même que celui du primal. Celà nous donnera :
 \begin{align*}
 \min_{y_+,y_-} \mathbf{1}^{n\times 1}\tau y_++\mathbf{1}^{n\times 1}\tau y_- & \leq \epsilon- d(\theta)^T x \\
