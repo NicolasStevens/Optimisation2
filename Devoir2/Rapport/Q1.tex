@@ -1,5 +1,14 @@
-On étudie le problème d'optimisation qui consiste à optimiser le diagramme $D(\theta)$ d'une antenne. Il s'agit de trouver les coefficients d'amplification $x_i$ des $N$ anneaux de l'antenne qui satisfassent aux conditions de diagramme unitaire (dans l'intervalle $\mathcal{P}=[\theta_P, 90\degree]$) ou nul (dans l'intervalle $\mathcal{S}=[0 \degree,\theta_S]$).
+\section*{Introduction}
+Soit une antenne composée de $N$ anneaux de diagramme $d_i(\theta)$. Le diagramme de l'antenne s'écrit $\
+D(\theta) = \sum_{i=0}^N d_i(\theta) x_i$ où les $x_i$ sont des facteurs d'amplification à déterminer. On étudie le problème d'optimisation qui consiste à optimiser le diagramme $D(\theta)$. Il s'agit de trouver les coefficients d'amplification $x_i$ des $N$ anneaux de l'antenne qui satisfassent aux conditions : 
+\begin{align*}
+D(\theta) &= 0  &\forall \theta \in \mathcal{S}=[0 \degree,\theta_S]\\
+D(\theta) &= 1 &\forall \theta \in \mathcal{P}=[\theta_P, 90\degree]
+\end{align*}
+Nous étudierons plusieurs modélisations possible de ce problème et les comparerons. Nous implémentons nos modèles en Ampl. Les codes qui permettent de tracer les figures sont fait en Matlab.
 
+
+\newpage
 \section{Formulation linéaire}
 \subsection{Modèle}
 On peut formuler le programme d'optimisation comme suit :
@@ -11,7 +20,7 @@ On peut formuler le programme d'optimisation comme suit :
 \text{avec } D(\theta) = \sum_{i=1}^N x_i d_i(\theta) & \text{ et } d_i(\theta) = \int_0^{2 \pi} cos(2 \pi r_i cos(\theta)cos(\phi)) d\phi \label{eq:di}
 \end{align}
 Le problème posé présente un désavantage majeur; il est soumis à une infinité de contraintes (\ref{conS}).\\
-Pour pallier à ce problème, nous échantillonnons le problème par rapport à $\theta$. Les contraintes du problèmes ne s'appliquant que dans $P = [\theta_P\: 90\degres  ]$ et $S = [0\degres \:\theta_S]$, nous échantillonnons seulement dans ces deux ensembles. Nous avons ainsi un nombre fini de contraintes. Afin de n'obtenir que des contraintes linéaires, nous transformons chaque contrainte faisant intervenir une valeur absolue en deux contraintes linéaires. Le problème devient alors : 
+Pour pallier à ce problème, nous échantillonnons le problème par rapport à $\theta$ sur $P = [\theta_P\: 90\degres  ]$ et $S = [0\degres \:\theta_S]$. Nous avons ainsi un nombre fini de contraintes. Afin d'obtenir que des contraintes linéaires, nous transformons chaque contrainte faisant intervenir une valeur absolue en deux contraintes linéaires. 
 \begin{align}
 \min_{x_i,\epsilon} \epsilon & & \nonumber\\
 & D(\theta)-1\leq \epsilon & \forall \theta\in \mathcal{P}_e \\
@@ -23,7 +32,7 @@ Pour pallier à ce problème, nous échantillonnons le problème par rapport à 
 $\mathcal{P}_e = \left\lbrace p_0,p_1,...,p_{Np}\right\rbrace$ et $\mathcal{S}_e= \left\lbrace s_0,s_1,...,s_{Ns}\right\rbrace$ sont les ensembles des échantillons dans $\mathcal{P}$ et $\mathcal{S}$. Deux points consécutifs sont séparés par une distance maximale de $h$.\\
 Cette formulation est bien évidemment une formulation approchée de notre problème initial puisque des points entre les échantillons pourront ne pas satisfaire les contraintes de diagramme unitaire ou nul. Cependant le non-respect de ces contraintes peut être quantifié. En effet, d'après les définitions des $d_i(\theta)$, la valeur absolue de la dérivée de ceux-ci ne peut pas dépasser $\pi$. Ce qui signifie que le dépassement de l'erreur de diagramme est au maximum $\sum |x_i\pi h|$. Il nous suffit alors de choisir un $h$ adapté au niveau de précision que nous voulons atteindre. 
 \\
-Notons que lors de l'implémentation de notre modèle, nous faisons une deuxième approximation en calculant les diagrammes $d_i(\theta)$. Comme l'intégrale de l'équation \eqref{eq:di} n'est pas calculable analytiquement (il s'agit d'une fonction de Bessel), nous la calculons numériquement au moyen d'une somme de Rieman dans notre code Ampl.
+Notons que lors de l'implémentation de notre modèle, nous faisons une deuxième approximation en calculant les diagrammes $d_i(\theta)$. Comme l'intégrale de l'équation \eqref{eq:di} n'est pas calculable analytiquement (il s'agit d'une fonction de Bessel), nous la calculons numériquement au moyen d'une somme de Rieman.
 \textbf{Todo : Expliquer notre choix de h, trouver une meilleure borne?, résoudre en ampl}		\\
 
 \subsection{Analyse des résultats}
@@ -31,7 +40,7 @@ La figure \ref{fig:D-ModLin} donne une illustration des diagrammes optimaux obte
 \begin{equation} \label{eq:erreurDiagramme}
 err = \int _{\mathcal{S}} |D(\theta)| d\theta + \int_{\mathcal{P}} |D(\theta) - 1| d\theta.
 \end{equation}
-On obtient 0.0209 (en bleu) et 0.1151 (vert) comme erreur pour les diagrammes de la figure \ref{fig:D-ModLin}. Pour les $x$ perturbés, on obtient comme erreur moyenne 6.5605 pour les diagrammes de la figure \ref{fig:D-ModLin-RobustTau01} et 64.6476 pour les diagrammes de la figure \ref{fig:D-ModLin-RobustTau01}.
+On obtient 0.0209 (en bleu) et 0.1151 (vert) comme erreur pour les diagrammes de la figure \ref{fig:D-ModLin}. 
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.32\textwidth}
@@ -56,7 +65,7 @@ On obtient 0.0209 (en bleu) et 0.1151 (vert) comme erreur pour les diagrammes de
 
 
 \subsection{Analyse de la robustesse}
-En pratique, l'implémentation des $x_i$ n'est pas réalise parfaitement. On a plutôt $\hat{x}_i = x_i(1+\xi_i)$ où les erreurs $\xi_i$ se situent dans un intervalle $[-\tau,\tau]$.\\
+En pratique, l'implémentation des $x_i$ n'est pas réalisable parfaitement. On a plutôt $\hat{x}_i = x_i(1+\xi_i)$ où les erreurs $\xi_i$ se situent dans un intervalle $[-\tau,\tau]$.\\
 Reprenons le modèle linéaire précédent et appliquons-lui des erreurs $xi_i$ de l'ordre de $\tau=0.001$ et $\tau=0.01$. On obtient les graphes aux figures \ref{fig:D-ModLin-RobustTau01} et \ref{fig:D-ModLin-RobustTau001}. On a donc une solution très sensible aux perturbations. Une valeur des erreurs sont données aux tableau récapitulatif \ref{table:Recap}. Ce tableau nous donne aussi une indication sur l'ordre de grandeur des $x_i$. Ils sont très élevé dans notre cas. Intuitivement, un grand $x_i$ positif vient compenser un grand $x_i$ négatif... dés qu'on perturbe ces valeurs des $x$, on a directement de grandes erreurs. On peut supposer qu'on modèle plus robuste consisterait à réduire ces valeurs ces $x_i$.
 
 
