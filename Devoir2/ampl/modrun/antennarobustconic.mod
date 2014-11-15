@@ -21,7 +21,7 @@ param diS{i in rings,j in S} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi
 param diP{i in rings,j in P} = sum{k in Integral} (0.5*(2*pi/mIntegral)*cos(2*pi*(i/10)*cos(ThetaP + j*(pi/2 - ThetaP)/samplesP)*cos(2*pi*k/mIntegral)));; 
 
 param tau;
-param gamma = 3*tau;
+param gamma;
 
 var x{rings};
 var y1{S}>=0; # Variables duales
