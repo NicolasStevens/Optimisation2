@@ -11,12 +11,12 @@ end
 theta = linspace(0,pi/2,m);
 di = computedi(theta,r);
 %[S,P,diP,diS] = computeDiagram(50,40,r);
-x0001=load('../res/antennarobustlintau0001.csv');
-x001=load('../res/antennarobustlintau001.csv');
+x0001=load('../res/antennarobustconicTau0001.csv');
+x001=load('../res/antennarobustconicTau001.csv');
 
 %% X non-perturbés
-eps1=0.05066248626;
-eps2=0.06787996131;
+eps1=0.03391505184;
+eps2=0.04371973912;
 figure();
 plotD(x0001,r,di,thetaS,thetaP,eps1,'b');
 plotD(x001,r,di,thetaS,thetaP,eps2,'g');
