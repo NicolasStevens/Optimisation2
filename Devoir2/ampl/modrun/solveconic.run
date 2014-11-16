@@ -5,12 +5,12 @@ option solver cplex;
 let tau:=0.001;
 let gamma:=0.0045107;
 solve;
-for{i in rings}{
-printf "%f \n",x[i] > ../../res/antennarobustconicTau0001.csv;
-}
+#for{i in rings}{
+#printf "%f \n",x[i] > ../../res/antennarobustconicTau0001.csv;
+#}
 let tau:=0.01;
 let gamma:=0.045107;
 solve;
-for{i in rings}{
-printf "%f \n",x[i] > ../../res/antennarobustconicTau001.csv;
-}
+#for{i in rings}{
+#printf "%f \n",x[i] > ../../res/antennarobustconicTau001.csv;
+#}

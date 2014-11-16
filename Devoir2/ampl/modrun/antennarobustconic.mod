@@ -37,9 +37,9 @@ subject to dualConstraint2{s in S} : sum{i in rings} diS[i,s]*x[i]*diS[i,s]*x[i]
 subject to dualConstraint3{p in P} : sum{i in rings} diP[i,p]*x[i]*diP[i,p]*x[i] <= y3[p]*y3[p];
 subject to dualConstraint4{p in P} : sum{i in rings} diP[i,p]*x[i]*diP[i,p]*x[i] <= y4[p]*y4[p];
 
-subject to S1{s in S}: gamma^2 * y1[s] <= epsilon - sum{i in rings} (diS[i,s]*x[i]);
-subject to S2{s in S}: gamma^2 * y2[s] <= epsilon + sum{i in rings} (diS[i,s]*x[i]);
-subject to S3{p in P}: gamma^2 * y3[p] <= epsilon + 1 - sum{i in rings} (diP[i,p]*x[i]);
-subject to S4{p in P}: gamma^2 * y4[p] <= epsilon - 1 + sum{i in rings} (diP[i,p]*x[i]);
+subject to S1{s in S}: gamma * y1[s] <= epsilon - sum{i in rings} (diS[i,s]*x[i]);
+subject to S2{s in S}: gamma * y2[s] <= epsilon + sum{i in rings} (diS[i,s]*x[i]);
+subject to S3{p in P}: gamma * y3[p] <= epsilon + 1 - sum{i in rings} (diP[i,p]*x[i]);
+subject to S4{p in P}: gamma * y4[p] <= epsilon - 1 + sum{i in rings} (diP[i,p]*x[i]);
 
 

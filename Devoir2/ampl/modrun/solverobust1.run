@@ -5,11 +5,11 @@ data ../data/antenna.dat;
 let tau:=0.001;
 option solver cplex;
 solve;
-for{i in rings}{
-printf "%f \n",x[i] > ../../res/antennarobustlintau0001.csv;
-}
+#for{i in rings}{
+#printf "%f \n",x[i] > ../../res/antennarobustlintau0001.csv;
+#}
 let tau:=0.01;
 solve;
-for{i in rings}{
-printf "%f \n",x[i] > ../../res/antennarobustlintau001.csv;
-}
+#for{i in rings}{
+#printf "%f \n",x[i] > ../../res/antennarobustlintau001.csv;
+#}

@@ -1,6 +1,6 @@
 function [err] = ComputeErrorDia(x,r,thetaP,thetaS,eps)
 %
-%
+% compute the error of the diagram
 %
 
 [S,P,diP,diS] = computeDiagram(thetaP,thetaS,r);

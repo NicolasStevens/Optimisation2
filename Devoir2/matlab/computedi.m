@@ -1,4 +1,7 @@
 function di = computedi(theta,r)
+%
+% function that computes the diagrams di of the rings of the antenna
+%
 N = length(r);
 m = length(theta);
 nint = 200;

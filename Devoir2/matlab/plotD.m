@@ -1,21 +1,15 @@
 function [] = plotD(x,r,di,thetaS,thetaP,eps,c)
 %
-%
+%function which plot the Diagram D using x, and di
 %
 
 N=length(x);
 m = length(di(1,:));
-%nint = 200;
+
 thetaS = thetaS*pi/180;
 thetaP = thetaP*pi/180;
 theta = linspace(0,pi/2,m);
-%xx = linspace(0,2*pi,nint);
-%for i=1:N
-%    for j=1:m
-%        fS = 0.5*cos(2*pi*r(i)*cos(theta(j))*cos(xx));
-%        di(i,j) = trapz(xx,fS);
-%    end
-%end
+
 for i=1:m
     D(i) = x'*di(:,i);
 end

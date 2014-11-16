@@ -3,7 +3,7 @@
 Le modèle robuste linéaire se base sur le pire des cas possible pour calculer un $epsilon$ optimal. On impose maintenant que
 $$\sum_{i=1}^N \xi_i^2 \leq \gamma^2$$
 On veut choisir une valeur de $\gamma$ telle que $P(\sum_{i=1}^N \xi_i^2 \leq \gamma^2)\geq 0.9999$. On va utiliser ici des variables intermédiaires $\xi_i^2$. La moyenne et la variance de ces variables sont $\mu = \frac{\tau^2}{3}$ et $\sigma^2 = \tau^4\cdot(\frac{1}{5}-\frac{1}{9})$.
-Par le théorême central limite, on sait que la distribution $Z = \sum_{i=1}^N \xi_i^2$ tend vers une variable normale : $Z\sim \mathcal{N}(N\mu, N\sigma^2)$. Il suffi alors d'inverser la CDF de Z pour trouver $\gamma$ tel que $P(Z\leq \gamma^2)=0.9999$( v. table \ref{gamma} pour les résultats).
+Par le théorême central limite, on sait que la distribution $Z = \sum_{i=1}^N \xi_i^2$ tend vers une variable normale : $Z\sim \mathcal{N}(N\mu, N\sigma^2)$. Il suffit alors d'inverser la CDF de $Z$ pour trouver $\gamma$ tel que $P(Z\leq \gamma^2)=0.9999$ (voir table \ref{gamma} pour les résultats).
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|}
@@ -16,13 +16,13 @@ $\gamma$ & 0.0045107 & 0.045107 \\
 \caption{Résultat de nos calculs pour $\gamma$}
 \label{gamma}
 \end{table}
-%TODO : vérifier
+
 On s'attend donc à de meilleurs résultats car les zones de $\mathbb{R}_N$ où tous les $\xi_i$ ont une valeur absolue élevée sont supprimées.
-On peut à nouveau reprendre les contraintes du primal et reformuler un problème d'optimisation, conique cette fois. On écrit à nouveau une paire primal dual :
+On peut à nouveau reprendre les contraintes du primal et reformuler un problème d'optimisation conique. On écrit à nouveau une paire primal/dual :
 \begin{center}
 \begin{minipage}{0.4\textwidth}
 \begin{align*}
-\max_{\xi} dx^T \xi & \leq \epsilon - d(\theta)^Tx \nonumber \\
+\max_{\xi} (d.*x)^T \xi & \leq \epsilon - d(\theta)^Tx \nonumber \\
 \begin{pmatrix}t \\ \xi \end{pmatrix} & \in   \mathbb{L}_{R^{n+1}} \nonumber \\ 
 t = \gamma \nonumber
 \end{align*}
@@ -30,7 +30,7 @@ t = \gamma \nonumber
 $\Leftrightarrow _{Dual}$
 \begin{minipage}{0.4\textwidth}
 \begin{eqnarray*}
-\min_{y} \gamma^2 y & \leq & \epsilon - d(\theta)^Tx \\
+\min_{y} \gamma y & \leq & \epsilon - d(\theta)^Tx \\
 \begin{pmatrix}
 y \\
 d_1(\theta)x_1(\theta) \\
@@ -61,20 +61,20 @@ d_n(\theta)x_n(\theta)
 \vline
 \begin{minipage}{0.4\textwidth}
 \begin{eqnarray*}
-\gamma^2 y_{1}(\theta) & \leq & \epsilon -d(\theta)^Tx \\
-\gamma^2 y_{2}(\theta) & \leq & \epsilon + d(\theta)^Tx \\
+\gamma y_{1}(\theta) & \leq & \epsilon -d(\theta)^Tx \\
+\gamma y_{2}(\theta) & \leq & \epsilon + d(\theta)^Tx \\
 \forall \theta \in S_e & & \\
-\gamma^2 y_{3}(\theta) & \leq & \epsilon +1 -d(\theta)^Tx \\
-\gamma^2 y_{4}(\theta) & \leq & \epsilon -1 + d(\theta)^Tx \\
+\gamma y_{3}(\theta) & \leq & \epsilon +1 -d(\theta)^Tx \\
+\gamma y_{4}(\theta) & \leq & \epsilon -1 + d(\theta)^Tx \\
 \forall \theta \in P_e & &
 \end{eqnarray*}
 \end{minipage}
 \end{center}
 
 \subsection{Analyse des résultats}
-La figure \ref{fig:D-ModCon} montre nos résultats pour différents types de perturbation. On constate que notre modèle résiste aux perturbations mais qu'un nombre non-négligeable de réalisations de $\hat{D(\theta)}$ dépasse les bornes imposées. Celà est sans doute du à l'approximation que nous avons faite pour calculer la valeur de $\gamma$.\\
-La table \ref{table:Recap} reprend les résultats obtenus pour ce modèle conique. L'ordre de grandeur des $x$ est plus grande que dans le modèle robuste précédent, cependant, notons que dans ce cas ci, tous les $x$ sont non-nuls, tandis que dans les modèle robuste précédent, beaucoup de $x$ étaient nul. On a donc ici une meilleure diversification des $x$. Ainsi une perturbation sur un $x$ aura moins d'impact. \\
-On constate que le $\epsilon$ est moindre que dans le modèle robuste précédent (ce qui était l'objectif de ce nouveau modèle). On constate aussi dans la table \ref{table:Recap} que les erreurs sont moins grandes (du moins pour les perturbations prévue par le modèle, donc pas dans le cas où on applique des perturbations de l'ordre de $\tau=0.01$ au modèle $\tau=0.001$). Par contre Les figures \ref{fig:D-ModCon} présente des dépassements. Celà est logique vu qu'on voulait un modèle plus précis dans la majorité des cas (donc erreur moyenne plus petite et $\epsilon$ plus petit) mais il reste certains cas où il y a dépassement.
+La figure \ref{fig:D-ModCon} présente nos résultats pour différents types de perturbations. On constate que notre modèle résiste bien aux perturbations. La table \ref{table:Recap} reprend les résultats obtenus pour ce modèle conique. L'ordre de grandeur des $x_i$ est plus petit que dans le modèle robuste précédent. Notons également que dans ce cas ci, tous les $x_i$ sont non-nuls, tandis que dans les modèle robuste précédent, beaucoup de $x$ étaient nuls. On a donc ici une meilleure diversification des $x_i$. Ainsi une perturbation sur un $x_i$ aura moins d'impact. \\
+On constate que le $\epsilon$ est plus élevé que dans le modèle robuste précédent mais les erreurs globales sont en générale moins grandes. 
+
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.32\textwidth}
@@ -88,7 +88,25 @@ On constate que le $\epsilon$ est moindre que dans le modèle robuste précéden
   \begin{subfigure}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{D-ModRobustCon-tau001.png}
   \end{subfigure}
-\caption{Graphes de $D(\theta)$ pour des $x$ non-perturbés, avec une perturbation $\tau=0.001$ et avec une perturbation $\tau = 0.01$(en vert pour un modèle de $\tau=0.01$ en bleu pour $\tau=0.001$). Les deux derniers graphes sont donnés pour une centaine de réalisations des $\xi_i$.}
+\caption{Graphes de $D(\theta)$ pour des $x$ non-perturbés, avec une perturbation $\tau=0.001$ (graphe du milieu) et avec une perturbation $\tau = 0.01$ (à droite)(en vert pour un modèle de $\tau=0.01$ en bleu pour $\tau=0.001$). Les deux derniers graphes sont donnés pour une centaine de réalisations des $\xi_i$.}
   \label{fig:D-ModCon}
-
   \end{figure}
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|ccc}
+ & & &  &&\textbf{Erreurs globales pour : } &\\
+Modèles & $\epsilon$ & $\mathcal{O}( x_i)$ ($x_i\neq0$)& $\% x_i = 0$ &$x_i$ & $x_i$ pert. ($\tau=0.001$) & $x_i$ pert. ($\tau=0.01$) \\
+ \hline
+Base & $2\%$ & $10^3$ &$65\%$ &0.0185 & 3.6302 & 34.9459 \\
+\hline
+Robuste 1 ($\tau=0.001$) & $5.07 \%$ & $10^0$& $72 \%$& 0.0396 & 0.0396  & 0.0440 \\
+Robuste 1 ($\tau=0.01$)  & $6.79 \%$ &$10^{-1}$ &$75\%$ &0.0508 & 0.0508 & 0.0510 \\
+\hline
+Conique ($\tau=0.001$) & $5.20 \%$ & $10^{-1}$ & $0\%$ &0.0413 & 0.0413 & 0.0423\\
+Conique ($\tau=0.01$) & $7.14 \%$& $10^{-2}$& $0\%$ &0.0490 & 0.0490 & 0.0490
+\end{tabular}
+\caption{Récapitulatif des résultats de la borne maximal $\epsilon$, des erreurs globales, des $x_i$ obtenus pour les différents modèles et les différents types de perturbations.}
+\label{table:Recap}
+\end{table}

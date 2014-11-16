@@ -1,6 +1,6 @@
 function [xsi] = Genxsi(tau,N)
 %
-%
+% function that generate random xsi in the interval -tau,tau
 %
 
 xsi=(tau/1.5)*randn(N,1);
