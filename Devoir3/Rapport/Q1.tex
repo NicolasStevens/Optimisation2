@@ -2,14 +2,23 @@
 Soit une poutre de section carré et de longueur "infinie" soumise à une charge $F$. On se propose d'étudier la résistance de cette poutre lorsqu'elle est chargée verticalement. On définie le champs de contraintes $\sigma = \begin{pmatrix}
 \sigma_{xx} & \sigma_{xy}\\
 \sigma_{xy} & \sigma_{yy}
-\end{pmatrix}$. On souhaite maximiser la charge imposer (c'est à dire l'intégrale de $\sigma_{yy}$ sur la surface supérieur de la poutre et sous les contraintes mécaniques suivante : 
+\end{pmatrix}$. On souhaite maximiser la charge imposé (c'est à dire l'intégrale de $\sigma_{yy}$ sur la surface supérieur de la poutre) sans qu'il y ait déformation plastique, sous les contraintes mécaniques suivantes : 
 \begin{align}
 \frac{\partial \sigma_{xx}}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y} &= 0 \label{eq:contrainteequilibre1}\\
 \frac{\partial \sigma_{xy}}{\partial x} + \frac{\partial \sigma_{yy}}{\partial y} &= 0\label{eq:contrainteequilibre2}\\
 \sigma^{(i)}n &= \sigma^{(j)}n & \text{si le triangles $(i)$ et $(j)$ ont un côté de normale $n$ en commun} \label{eq:contrainteContinuite}\\
 \sigma n &= 0 & \text{sur la frontière} \label{eq:contrainteFrontiere}
 \end{align}
-où les contraintes \eqref{eq:contrainteequilibre1} et \eqref{eq:contrainteequilibre2} expriment la conservation de la quantité de mouvement. Comme ce problème possède une infinité de contraintes (problème continu), nous le discrétisons en triangles et on va s'intéresser à calculer les champs des contraintes aux nœuds $i$ des triangles de coordonné $(x_i,y_i)$.
+où les contraintes \eqref{eq:contrainteequilibre1} et \eqref{eq:contrainteequilibre2} expriment la conservation de la quantité de mouvement. \\
+Comme ce problème possède une infinité de contraintes (problème continu), nous le discrétisons en triangles comme à la figure \ref{fig:discretisation}. A première vue, un noeud peut prendre plusieurs valeurs $\sigma$ si il appartient à plusieurs triangles. 
+
+\begin{figure}
+\centering
+\includegraphics[height=5cm]{images/discretisation.png}
+\caption{Section de la poutre discrétisée en triangles}
+\label{fig:discretisation}
+\end{figure}
+
 
 \newpage
 \section{Modélisation}
@@ -46,6 +55,7 @@ Dans notre cas, comme les triangles sont rectangle, ces expressions se simplifie
 \sigma_{xy}^i &= 0 & \text{si le noeud (i) est sur la frontière}\\
 \sigma_{yy}^i &= 0 & \text{si le noeud (i) est sur la frontière}
 \end{align}
+
 
 
 
