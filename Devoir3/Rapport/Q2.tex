@@ -1,32 +1,32 @@
 \section{Méthode de point intérieur}
 
 Nous cherchons à définir une méthode à pas longs pour un problème d'optimisation du type suivant :
-\begin{eqnarray*}
-\min_{x_1,x_2} & & c_1^Tx_1+c_2^Tx_2\\
+\begin{align*}
+\min_{x_1,x_2} & c_1^Tx_1+c_2^Tx_2\\
 \begin{pmatrix} A_1 & A_2 \end{pmatrix}
-& = & \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
+& = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
 x_1 & \geq 0 \\
 x_2 & \in \mathbb{L}^{n_2}
-\end{eqnarray*}
+\end{align*}
 A cet effet nous supprimons les contraintes d'inégalité à l'aide de fonctions barrières. Le problème perturbé s'écrit donc
-\begin{eqnarray*}
-\min_{x_1,x_2} & & c_1^Tx_1+c_2^Tx_2 - \mu_k(\sum_{x_1i} \log(x_i)+ \log(\tau^2 - ||x_2||_2^2)) \\
+\begin{align*}
+\min_{x_1,x_2}  & c_1^Tx_1+c_2^Tx_2 - \mu_k(\sum_{x_1i} \log(x_i)+ \log(\tau^2 - ||x_2||_2^2)) \\
 \begin{pmatrix} A_1 & A_2 \end{pmatrix}
-& = & \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
-\end{eqnarray*}
-Nous pouvons écrire les conditions d'optimalité pour ce problème :
-\begin{eqnarray*}
-\bigtriangledown f & = & 0 \\
-\text{avec }f(x_1,x_2,z) & = & 
+& = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
+\end{align*}
+Comme le problème est convexe, nous pouvons écrire les conditions d'optimalité comme suit :
+\begin{align*}
+\bigtriangledown f & =  0 \\
+\text{avec }f(x_1,x_2,z) & = 
 c_1^Tx_1+c_2^Tx_2 - \mu_k(\sum_{x_1i} \log(x_i)+ \log(\tau^2 - ||x_2||_2^2)) -z^T(A_1x_1+A_2x_2-b)\\
 & \Rightarrow & \\
-\bigtriangledown_{x_1}f & = & c_1^T -s_1^T -z^TA_1 = 0 \\
-\bigtriangledown_{x_2}f & = & c_2^T -s_2^T - z^TA_2 = 0 \\
-\bigtriangledown_{z}f & = & -x_1^TA_1^T-x_2^TA_2^T+b^T = 0 \\
-s_{1i} x_{1i} & = & \mu_k \\
-s_{2i} \frac{\tau^2 - ||x_{2}||_2^2}{2x_{2i}} & = & \mu_k
-\end{eqnarray*}
-On doit donc résoudre $F=0 $ avec 
+\bigtriangledown_{x_1}f & =  c_1^T -s_1^T -z^TA_1 = 0 \\
+\bigtriangledown_{x_2}f & =  c_2^T -s_2^T - z^TA_2 = 0 \\
+\bigtriangledown_{z}f & =  -x_1^TA_1^T-x_2^TA_2^T+b^T = 0 \\
+s_{1i} x_{1i} & = \mu_k \\
+s_{2i} \frac{\tau^2 - ||x_{2}||_2^2}{2x_{2i}} & = \mu_k
+\end{align*}
+Où $z$ est le vecteur des multiplicateurs de Lagrange. On doit donc résoudre $F=0 $ avec 
 $$
 F : \begin{pmatrix}
 x_1 \\ x_2 \\ y \\ s_1 \\ s_2 \\ t
@@ -53,7 +53,7 @@ S_1 & 0 & 0 & X_1 & 0 & 0 \\
 \end{pmatrix}$$
 On a alors le système à résoudre pour obtenir le pas de Newton
 
-\begin{eqnarray}
+\begin{align}
 J_F \begin{pmatrix}
 \Delta x_1 \\
 \Delta x_2 \\
@@ -70,7 +70,7 @@ J_F \begin{pmatrix}
 -2X_2Te+ (\tau^2-||x_2||_2^2)e\\
 \end{pmatrix}
 \label{eq:pasN}
-\end{eqnarray}
+\end{align}
 On a alors l'algorithme suivant
 \begin{algorithm}[!h]
 \KwData{$A_1,A_2,c_1,c_2,b,\tau_L,\mu_0, \epsilon,\sigma,\nu$}

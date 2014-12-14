@@ -61,16 +61,21 @@ $n=\begin{pmatrix}
 Finalement, on obtient les expressions suivantes : 
 \begin{align}
 \max \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} \frac{|\sigma_{yy}^j - \sigma_{yy}^{j+1}|}{2 d } & \\
-\frac{\sigma_{xx}^n - \sigma_{xx}^m}{x_m - x_n}  + \frac{\sigma_{xx}^p - \sigma_{xx}^m}{x_p - x_m} + \frac{\sigma_{xy}^n - \sigma_{xy}^m}{y_n - y_m} + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $m$, $n$ et $p$} \in \triangle_j \\
-\frac{\sigma_{xy}^n - \sigma_{xy}^m}{x_m - x_n}  + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{x_p - x_m} + \frac{\sigma_{yy}^n - \sigma_{yy}^m}{y_n - y_m} + \frac{\sigma_{yy}^p - \sigma_{yy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $m$, $n$ et $p$} \in \triangle_j \\
+\frac{\sigma_{xx}^n - \sigma_{xx}^m}{x_n - x_m}  + \frac{\sigma_{xx}^p - \sigma_{xx}^m}{x_p - x_m} + \frac{\sigma_{xy}^n - \sigma_{xy}^m}{y_n - y_m} + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $m$, $n$ et $p$} \in \triangle_j \\
+\frac{\sigma_{xy}^n - \sigma_{xy}^m}{x_n - x_m}  + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{x_p - x_m} + \frac{\sigma_{yy}^n - \sigma_{yy}^m}{y_n - y_m} + \frac{\sigma_{yy}^p - \sigma_{yy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $m$, $n$ et $p$} \in \triangle_j \\
 \sigma_{xx}^i &= \sigma_{xx}^j & \text{si le noeud (i) et (j) sont confondus}\\
 \sigma_{xy}^i &= \sigma_{xy}^j & \text{si le noeud (i) et (j) sont confondus}\\
 \sigma_{yy}^i &= \sigma_{yy}^j & \text{si le noeud (i) et (j) sont confondus}\\
 \sigma_{xx}^i &= 0 & \text{si le noeud (i) est sur la frontière} \\
 \sigma_{xy}^i &= 0 & \text{si le noeud (i) est sur la frontière}\\
-(\sigma_{xx}^i - \sigma_{yy}^i)^2 + (2 \sigma_{xy}^i)^2 & \leq 4 k^2 & \forall \text{node} i
+(\sigma_{xx}^i - \sigma_{yy}^i)^2 + (2 \sigma_{xy}^i)^2 & \leq 4 k^2 & \forall \text{noeud $i$}
 \end{align}
-
+Les conditions ??? à ??? reviennent donc à aoir autant de variables $\sigma$ que de noeuds. Donc si deux triangles partagent 2 même noeuds, ils ont la même valeur à ces noeuds. On peut évidemment réexprimer la fonction objectif comme : 
+\begin{align*}
+& \max  t \\
+t &\leq \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} \frac{\sigma_{yy}^j - \sigma_{yy}^{j+1}}{2 d}\\
+t &\leq  \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} - \frac{\sigma_{yy}^j - \sigma_{yy}^{j+1}}{2 d} 
+\end{align*}
 
 
 
