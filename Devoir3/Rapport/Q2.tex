@@ -75,9 +75,9 @@ On a alors l'algorithme suivant
 \begin{algorithm}[!h]
 \KwData{$A_1,A_2,c_1,c_2,b,\tau_L,\mu_0, \epsilon,\sigma,\nu$}
 $(x_1^{0},x_2^{0},y^{0},s_1^{0},s_2^{0},t^{0})$ est tel que 
-$\delta(x_1^{0},x_2^{0},y^{0},s_1^{0},s_2^{0},t^{0}) < \nu$
-\For{$k = 0,1,2,... $, }
+$\delta(x_1^{0},x_2^{0},y^{0},s_1^{0},s_2^{0},t^{0}) < \nu$\;
+\For{$k = 0,1,2,... $, }{
 Calculer le pas de Newton $(\Delta x_1^{k},\Delta x_2^{k},\Delta y^{k},\Delta s_1^{k},\Delta s_2^{k},\Delta t^{k})$ à l'aide du système (\ref{eq:pasN})\;
-Poser $x^{k+1} = x^k + \alpha_k \Delta x^k$
+Poser $x^{k+1} = x^k + \alpha_k \Delta x^k$}
 %TODO : choix du alpha
 \end{algorithm}
