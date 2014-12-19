@@ -23,59 +23,38 @@ Comme ce problème possède une infinité de contraintes (problème continu), no
 
 \newpage
 \section{Modélisation}
-On peut modéliser notre problème comme un problème d'éléments finis. Nos variables sont les $\sigma_{xx}^i$, $\sigma_{xy}^i$ et $\sigma_{yy}^i$ en chaque nœud $i$. Nous interpolons linéairement le champ des contraintes dans chaque triangles $k$.
-Afin de définir facilement nos fonctions de formes, on effectue un changement de variables $(x,y)\rightarrow (\xi,\eta)$ où $(\xi, \eta)$ sont les coordonnées dans le triangle parents (de sommets $(0,0)$, $(1,0)$ et $(0,1)$). 
-Soit un triangle quelconque dont les points sont numéroté $m,n,p$. 
-Le gradient ce la transformation $\frac{\partial (\xi,\eta)}{\partial (x,y)}$ est donné par  : $\frac{\partial \xi}{\partial x} = \frac{1}{x_m - x_n}$, $\frac{\partial \xi}{\partial y} = \frac{1}{y_m - y_n}$, $\frac{\partial \eta}{\partial x} = \frac{1}{x_p - x_m}$ et $\frac{\partial \eta}{\partial y} = \frac{1}{y_p - y_m}$
-Chacun des champs sur un triangle $k$ est défini comme suit : 
-\begin{equation} \label{eq:champsEFM}
-\begin{aligned}
-\sigma_{xx}^k (\xi,\eta) &= \sum_{j \in \{\text{noeud de $k$}\}} \phi_j (\xi,\eta) \sigma_{xx}^{k,j}\\
-\sigma_{xy}^k (\xi,\eta) &= \sum_{j \in \{\text{noeud de $k$}\}} \phi_j (\xi,\eta) \sigma_{xy}^{k,j}\\
-\sigma_{yy}^k (\xi,\eta) &= \sum_{j \in \{\text{noeud de $k$}\}} \phi_j (\xi,\eta) \sigma_{yy}^{k,j}
-\end{aligned}
-\end{equation}
-où les $\phi_j$ sont les fonctions de formes suivantes (choisies telles que $\phi_1$ vaut 1 au sommet 1, et 0 aux autres sommets, $\phi_2$ vaut 1 au sommet 2...) : 
-\begin{equation}
-\begin{aligned}
-\phi_1 (\xi,\eta) &= (1- \xi - \eta)\\
-\phi_2 (\xi,\eta) &= \xi\\
-\phi_3 (\xi,\eta) &= \eta
-\end{aligned}
-\end{equation}
-On impose ensuite notre fonction objectif et nos contraintes \eqref{eq:contrainteequilibre1}, \eqref{eq:contrainteequilibre2}, \eqref{eq:contrainteContinuite}, \eqref{eq:contrainteFrontiere} et \eqref{eq:contrainteTresca} sur nos champs définis comme en \eqref{eq:champsEFM} :
+Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la longueur d'un côté d'un triangle et $h=\frac{l}{2}$, la longueur de la hauteur. On considère quatre cas : 
 \begin{itemize}
-\item  Pour la fonction objectif, comme l'interpolation est linéaire, cela correspond à faire une règle des trapèzes sur les $\sigma_{yy}$ des nœuds supérieurs; et comme les triangles sont rectangles, la longueur de chaque côté vaut $d$;
-\item  On utilise la "chain rule" pour exprimer les dérivées partielles de \eqref{eq:contrainteequilibre1} et \eqref{eq:contrainteequilibre2}, par example : $\frac{\partial \sigma_{xx}}{\partial x} = \frac{\partial \sigma_{xx}}{\partial \xi} \frac{\partial \xi}{\partial x} + \frac{\partial \sigma_{xx}}{\partial \eta} \frac{\partial \eta}{\partial x}$;
-\item Pour imposer que les surfaces latérales sont libres, on fait $\sigma \cdot n = 0 $ où 
-$n=\begin{pmatrix}
-± 1 & 0
-\end{pmatrix}$ et donc $\begin{pmatrix}
-\sigma_{xx} & \sigma_{xy}
-\end{pmatrix} = \begin{pmatrix}
-0 &0
-\end{pmatrix}$;
-\item comme l'interpolation est linéaire, la continuité du champs revient à imposer une même valeur pour chaque nœud (même si celui-ci apparient à plusieurs triangles);
-\item comme l'interpolation est linéaire, la contrainte de Tresca-von Mises est "critique" sur les bords de chaque triangles, il suffit donc de vérifier \eqref{eq:contrainteTresca} sur les trois nœuds de chaque triangle. 
-\end{itemize}
-Finalement, on obtient les expressions suivantes : 
-\begin{align}
-\max \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} \frac{|\sigma_{yy}^j - \sigma_{yy}^{j+1}|}{2 d } & \\
-\frac{\sigma_{xx}^n - \sigma_{xx}^m}{x_n - x_m}  + \frac{\sigma_{xx}^p - \sigma_{xx}^m}{x_p - x_m} + \frac{\sigma_{xy}^n - \sigma_{xy}^m}{y_n - y_m} + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $m$, $n$ et $p$} \in \triangle_j \\
-\frac{\sigma_{xy}^n - \sigma_{xy}^m}{x_n - x_m}  + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{x_p - x_m} + \frac{\sigma_{yy}^n - \sigma_{yy}^m}{y_n - y_m} + \frac{\sigma_{yy}^p - \sigma_{yy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $m$, $n$ et $p$} \in \triangle_j \\
-\sigma_{xx}^i &= \sigma_{xx}^j & \text{si le noeud (i) et (j) sont confondus}\\
-\sigma_{xy}^i &= \sigma_{xy}^j & \text{si le noeud (i) et (j) sont confondus}\\
-\sigma_{yy}^i &= \sigma_{yy}^j & \text{si le noeud (i) et (j) sont confondus}\\
-\sigma_{xx}^i &= 0 & \text{si le noeud (i) est sur la frontière} \\
-\sigma_{xy}^i &= 0 & \text{si le noeud (i) est sur la frontière}\\
-(\sigma_{xx}^i - \sigma_{yy}^i)^2 + (2 \sigma_{xy}^i)^2 & \leq 4 k^2 & \forall \text{noeud $i$}
-\end{align}
-Les conditions ??? à ??? reviennent donc à aoir autant de variables $\sigma$ que de noeuds. Donc si deux triangles partagent 2 même noeuds, ils ont la même valeur à ces noeuds. On peut évidemment réexprimer la fonction objectif comme : 
+\item cas triangle 1, orienté comme le 1 sur la figure \ref{fig:discretisation};
+\item cas triangle 2, orienté comme le 2 sur la figure \ref{fig:discretisation};
+\item cas triangle 3, orienté comme le 3 sur la figure \ref{fig:discretisation};
+\item cas triangle 4, orienté comme le 4 sur la figure \ref{fig:discretisation};
+\end{itemize} 
+et dans chacun des cas, on écrit les conditions de divergence nulle comme une différence finie. Pour les conditions de continuité, on distingue 
+
 \begin{align*}
-& \max  t \\
-t &\leq \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} \frac{\sigma_{yy}^j - \sigma_{yy}^{j+1}}{2 d}\\
-t &\leq  \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} - \frac{\sigma_{yy}^j - \sigma_{yy}^{j+1}}{2 d} 
+\frac{\sigma_{xx}^3 - \frac{\sigma_{xx}^1+\sigma_{xx}^2}{2}}{h} + \frac{\sigma_{xy}^1-\sigma_{xy}^2}{l}&=0 & \text{pour triangle type 1}\\
+\frac{\sigma_{xy}^3 - \frac{\sigma_{xy}^1+\sigma_{xy}^2}{2}}{h} + \frac{\sigma_{yy}^1-\sigma_{yy}^2}{l}&=0& \text{pour triangle type 1}\\
+\frac{\sigma_{xx}^3-\sigma_{xx}^2}{l} + \frac{\sigma_{xy}^1 - \frac{\sigma_{xy}^3+\sigma_{xy}^2}{2}}{h} &=0& \text{pour triangle type 2}\\
+\frac{\sigma_{xy}^3-\sigma_{xy}^2}{l} + \frac{\sigma_{yy}^1 - \frac{\sigma_{yy}^3+\sigma_{yy}^2}{2}}{h} &=0 & \text{pour triangle type 2}\\
+\frac{\frac{\sigma_{xx}^3+\sigma_{xx}^2}{2} - \sigma_{xx}^1 }{h} + \frac{\sigma_{xy}^3-\sigma_{xy}^2}{l}&=0& \text{pour triangle type 3}\\
+\frac{\frac{\sigma_{xy}^3+\sigma_{xy}^2}{2} - \sigma_{xy}^1 }{h} + \frac{\sigma_{yy}^3-\sigma_{yy}^2}{l}&=0& \text{pour triangle type 3}\\
+\frac{\sigma_{xx}^3-\sigma_{xx}^1}{l} + \frac{\frac{\sigma_{xy}^1+\sigma_{xy}^3}{2} - \sigma_{xy}^2 }{h} &=0 & \text{pour triangle type 4}\\
+\frac{\sigma_{xy}^3-\sigma_{xy}^1}{l} + \frac{\frac{\sigma_{yy}^1+\sigma_{yy}^3}{2} - \sigma_{yy}^2 }{h} &=0 & \text{pour triangle type 4}\\
 \end{align*}
 
+
+
+%\begin{align}
+%\max \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} \frac{|\sigma_{yy}^j - \sigma_{yy}^{j+1}|}{2 d } & \\
+%\frac{\sigma_{xx}^n - \sigma_{xx}^m}{x_n - x_m}  + \frac{\sigma_{xx}^p - \sigma_{xx}^m}{x_p - x_m} + \frac{\sigma_{xy}^n - \sigma_{xy}^m}{y_n - y_m} + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $1$, $2$ et $3$} \in \triangle_j \\
+%\frac{\sigma_{xy}^n - \sigma_{xy}^m}{x_n - x_m}  + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{x_p - x_m} + \frac{\sigma_{yy}^n - \sigma_{yy}^m}{y_n - y_m} + \frac{\sigma_{yy}^p - \sigma_{yy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $1$, $2$ et $3$} \in \triangle_j \\
+%\sigma_{xx}^i &= \sigma_{xx}^j & \text{si le noeud (i) et (j) sont confondus}\\
+%\sigma_{xy}^i &= \sigma_{xy}^j & \text{si le noeud (i) et (j) sont confondus}\\
+%\sigma_{yy}^i &= \sigma_{yy}^j & \text{si le noeud (i) et (j) sont confondus}\\
+%\sigma_{xx}^i &= 0 & \text{si le noeud (i) est sur la frontière} \\
+%\sigma_{xy}^i &= 0 & \text{si le noeud (i) est sur la frontière}\\
+%(\sigma_{xx}^i - \sigma_{yy}^i)^2 + (2 \sigma_{xy}^i)^2 & \leq 4 k^2 & \forall \text{noeud $i$}
+%\end{align}
 
 
