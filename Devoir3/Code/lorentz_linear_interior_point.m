@@ -8,6 +8,8 @@ function [x] = lorentz_linear_interior_point(c1,c2,A1,A2,b,tau,epsilon,sigma,nu)
 
 %% Check input !!
 
+%% Initial newton so that delta(nx)<nu
+
 %% Additional parameters
 itMax = 50;
 %Initial conditions !!!!
