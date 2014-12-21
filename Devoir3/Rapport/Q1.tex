@@ -1,5 +1,5 @@
 \section*{Introduction}
-Soit une poutre de section carré et de longueur "infinie" soumise à une charge $F$. On se propose d'étudier la résistance de cette poutre lorsqu'elle est chargée verticalement. On définie le champs de contraintes $\sigma = \begin{pmatrix}
+Soit une poutre de section carré et de longueur "infinie" soumise à une charge $F$ sur sa moitié centrale supérieur. On se propose d'étudier la résistance de cette poutre lorsqu'elle est chargée verticalement. On définie le champs de contraintes $\sigma = \begin{pmatrix}
 \sigma_{xx} & \sigma_{xy}\\
 \sigma_{xy} & \sigma_{yy}
 \end{pmatrix}$. On souhaite maximiser la charge imposée (c'est à dire l'intégrale de $\sigma_{yy}$ sur la surface supérieur de la poutre) sans qu'il y ait déformation plastique, sous les contraintes mécaniques suivantes : 
@@ -30,8 +30,32 @@ Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la lo
 \item cas triangle 3, orienté comme le 3 sur la figure \ref{fig:discretisation};
 \item cas triangle 4, orienté comme le 4 sur la figure \ref{fig:discretisation};
 \end{itemize} 
-et dans chacun des cas, on écrit les conditions de divergence nulle comme une différence finie. Pour les conditions de continuité, on distingue 
+et dans chacun des cas, on écrit les conditions de divergence nulle comme des différences finies. 
 
+
+Pour les conditions de continuité, on distingue quatre cas : 
+\begin{equation}
+\overrightarrow{n} = \begin{pmatrix}
+1\\
+-1
+\end{pmatrix}, 
+\overrightarrow{n} = \begin{pmatrix}
+1\\
+1
+\end{pmatrix}, 
+\overrightarrow{n} = \begin{pmatrix}
+1\\
+0
+\end{pmatrix},
+\overrightarrow{n} = \begin{pmatrix}
+0\\
+1
+\end{pmatrix}
+\end{equation}
+
+La fonction objectif correspond à une règle des trapèze sur les $\sigma_{yy}$ en les points où le bloc exerçant la force s'applique. 
+
+Au final, les conditions d'équilibre donnent : 
 \begin{align*}
 \frac{\sigma_{xx}^3 - \frac{\sigma_{xx}^1+\sigma_{xx}^2}{2}}{h} + \frac{\sigma_{xy}^1-\sigma_{xy}^2}{l}&=0 & \text{pour triangle type 1}\\
 \frac{\sigma_{xy}^3 - \frac{\sigma_{xy}^1+\sigma_{xy}^2}{2}}{h} + \frac{\sigma_{yy}^1-\sigma_{yy}^2}{l}&=0& \text{pour triangle type 1}\\
@@ -42,19 +66,54 @@ et dans chacun des cas, on écrit les conditions de divergence nulle comme une d
 \frac{\sigma_{xx}^3-\sigma_{xx}^1}{l} + \frac{\frac{\sigma_{xy}^1+\sigma_{xy}^3}{2} - \sigma_{xy}^2 }{h} &=0 & \text{pour triangle type 4}\\
 \frac{\sigma_{xy}^3-\sigma_{xy}^1}{l} + \frac{\frac{\sigma_{yy}^1+\sigma_{yy}^3}{2} - \sigma_{yy}^2 }{h} &=0 & \text{pour triangle type 4}\\
 \end{align*}
+Les conditions de continuité donnent, en nommant $a,b$ les points d'un coté du segment et $c,d$ les points de l'autre coté : \\
+\textbf{cas 1 : }
+\begin{align*}
+\sigma_{xx}^a - \sigma_{xy}^a &= \sigma_{xx}^c - \sigma_{xy}^c \\
+ \sigma_{xy}^a - \sigma_{yy}^a &= \sigma_{xy}^c - \sigma_{yy}^c \\
+ \sigma_{xx}^b - \sigma_{xy}^b &= \sigma_{xx}^d - \sigma_{xy}^d \\
+ \sigma_{xy}^b - \sigma_{yy}^b &= \sigma_{xy}^d - \sigma_{yy}^d \\
+\end{align*}
+\textbf{cas 2 :}
+\begin{align*}
+\sigma_{xx}^a + \sigma_{xy}^a &= \sigma_{xx}^c + \sigma_{xy}^c \\
+ \sigma_{xy}^a + \sigma_{yy}^a &= \sigma_{xy}^c + \sigma_{yy}^c \\
+ \sigma_{xx}^b +\sigma_{xy}^b &= \sigma_{xx}^d + \sigma_{xy}^d \\
+ \sigma_{xy}^b + \sigma_{yy}^b &= \sigma_{xy}^d + \sigma_{yy}^d \\
+\end{align*}
+\textbf{cas 3 :}
+\begin{align*}
+\sigma_{xx}^a &= \sigma_{xx}^c \\
+ \sigma_{xy}^a  &= \sigma_{xy}^c \\
+ \sigma_{xx}^b&= \sigma_{xx}^d\\
+ \sigma_{xy}^b &= \sigma_{xy}^d  \\
+\end{align*}
+\textbf{cas 4 :}
+\begin{align*}
+\sigma_{xy}^a &= \sigma_{xy}^c \\
+\sigma_{yy}^a &=  \sigma_{yy}^c \\
+\sigma_{xy}^b &= \sigma_{xy}^d \\
+\sigma_{yy}^b &= \sigma_{yy}^d \\
+\end{align*}
+
+Les conditions frontières donnent, pour tout nœud $a$ appartenant à une frontière latérale : 
+\begin{align*}
+\sigma_{xx}^a&= 0\\
+ \sigma_{xy}^a &= 0  \\
+\end{align*}
+
+Les conditions frontières donnent, pour tout nœud $a$ appartenant au premier quart ou au dernier quart de la frontière supérieur (en fait c'est un peu plus subtil que ça, comme $N$ n'est pas toujours un multiple de 4, on a $2\lfloor \frac{N}{4} \rfloor + 1 \left( \lceil \frac{N}{4} \rceil - \lfloor \frac{N}{4} \rfloor \right) = \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil$ points en lesquels il faut imposer une contrainte de chaque côté du bloc exerçant la force; c'est-à-dire au total $4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)$ contraintes) : 
+\begin{align*}
+\sigma_{yy}^a&= 0\\
+ \sigma_{xy}^a &= 0  \\
+\end{align*}
 
 
-
-%\begin{align}
-%\max \sum_{j \in \text{top nodes, $x_j < x_{j+1}$}} \frac{|\sigma_{yy}^j - \sigma_{yy}^{j+1}|}{2 d } & \\
-%\frac{\sigma_{xx}^n - \sigma_{xx}^m}{x_n - x_m}  + \frac{\sigma_{xx}^p - \sigma_{xx}^m}{x_p - x_m} + \frac{\sigma_{xy}^n - \sigma_{xy}^m}{y_n - y_m} + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $1$, $2$ et $3$} \in \triangle_j \\
-%\frac{\sigma_{xy}^n - \sigma_{xy}^m}{x_n - x_m}  + \frac{\sigma_{xy}^p - \sigma_{xy}^m}{x_p - x_m} + \frac{\sigma_{yy}^n - \sigma_{yy}^m}{y_n - y_m} + \frac{\sigma_{yy}^p - \sigma_{yy}^m}{y_p - y_m} &= 0  & \forall \triangle j, \forall \text{noeud $1$, $2$ et $3$} \in \triangle_j \\
-%\sigma_{xx}^i &= \sigma_{xx}^j & \text{si le noeud (i) et (j) sont confondus}\\
-%\sigma_{xy}^i &= \sigma_{xy}^j & \text{si le noeud (i) et (j) sont confondus}\\
-%\sigma_{yy}^i &= \sigma_{yy}^j & \text{si le noeud (i) et (j) sont confondus}\\
-%\sigma_{xx}^i &= 0 & \text{si le noeud (i) est sur la frontière} \\
-%\sigma_{xy}^i &= 0 & \text{si le noeud (i) est sur la frontière}\\
-%(\sigma_{xx}^i - \sigma_{yy}^i)^2 + (2 \sigma_{xy}^i)^2 & \leq 4 k^2 & \forall \text{noeud $i$}
-%\end{align}
-
-
+Si $N$ est le nombre de carrés sur un côté de la section de la poutre, alors on a :
+\begin{align*}
+\text{\# carrés  } &= N^2\\
+\text{\# triangles  } &= 4N^2\\
+\text{\# points  } &= 12 N^2\\
+\text{\# contraintes  } &= 24N^2+12N(N-1)+8N + 4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)
+\end{align*}
+Pour $N=4$ par exemple, on a $520$ contraintes
