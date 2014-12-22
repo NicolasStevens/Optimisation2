@@ -1,6 +1,6 @@
 function [] = plotChamps(x,N)
 %
-%
+% Fonction qui plot les champs des contraintes contenues dans x.
 %
 L=1;
 nBNode = N*N*4*3;
@@ -75,17 +75,22 @@ end
 figure()
 trisurf(Tri,X,Y,Z1);
 title('champs sigmaXX');
-saveas(gcf,'sigmaxxN32.eps','epsc')
+%saveas(gcf,'sigmaxxN32.eps','epsc')
 
 figure()
 trisurf(Tri,X,Y,Z2);
 title('champs sigmaXY');
-saveas(gcf,'sigmaxyN32.eps','epsc')
+%saveas(gcf,'sigmaxyN32.eps','epsc')
 
 figure()
 trisurf(Tri,X,Y,Z3);
 title('champs sigmaYY');
-saveas(gcf,'sigmayyN32.eps','epsc')
+%saveas(gcf,'sigmayyN32.eps','epsc')
+
+figure()
+trisurf(Tri,X,Y,(Z1-Z3).^2 + (2*Z2).^2);
+title('Tresca');
+%saveas(gcf,'Tresca.eps','epsc')
 
 % X=[0 0 1];
 % Y=[0 1 0];
