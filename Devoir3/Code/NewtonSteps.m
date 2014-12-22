@@ -1,10 +1,11 @@
-function [x,y] = NewtonSteps(xold,yold,A,c,k,mu,tau)
+function [x,y,steps] = NewtonSteps(xold,yold,A,c,k,mu,tau,linesearch)
 delta = tau;
 x = xold;
 y = yold;
 nx = length(x);
 ny = length(y);
 fprintf('Newton steps  ::  norm(step)  |    delta   |  alpha    |   objective  \n');
+steps = 0;
 while delta>= tau
     [VM,H] = derivative_VM3(x,k);
     F = zeros(nx+ny,1);
@@ -16,38 +17,41 @@ while delta>= tau
     newtonx = NewtonStep(1:nx);
     delta = (newtonx'*H*newtonx)^(1/2);
     alpha = 1;
-    if delta>=1
-        alpha = 1/(1+delta);
+    if not(linesearch)
+        if delta>=1
+            alpha = 1/(1+delta);
+        end
+    else
+        alphamax = 1;
+        alphamin = 1/(1+delta);
+        xamin = xold + alphamin*newtonx;
+        xamax = xold + alphamax*newtonx;
+        j=0;
+        if not(isInDomain(xamax))
+            while j<10 && alpha<1
+                alpha = (alphamax+alphamin)/2;
+                xalpha = xold + alpha*newtonx;
+                if isInDomain(xalpha) && c'*xalpha>c'*xamin
+                    alphamin = alpha;
+                    xamin = xalpha;
+                else
+                    alphamax = alpha;
+                end
+                j = j+1;
+            end
+            alpha = alphamin;
+        else
+            alpha = alphamax;
+        end
     end
-%     alphamax = 1;
-%     alphamin = 1/(1+delta);
-%     xamin = xold + alphamin*newtonx;
-%     xamax = xold + alphamax*newtonx;
-%     j=0;
-%     if not(isInDomain(xamax))
-%         while j<10 && alpha<1
-%             alpha = (alphamax+alphamin)/2;
-%             xalpha = xold + alpha*newtonx;
-%             if isInDomain(xalpha) && c'*xalpha>c'*xamin
-%                 alphamin = alpha;
-%                 xamin = xalpha;
-%             else
-%                 alphamax = alpha;
-%             end
-%             j = j+1;
-%         end
-%         alpha = alphamin;
-%     else
-%         alpha = alphamax;
-%     end
     xold = x;
     yold = y;
     NewtonStep = alpha*NewtonStep;
     v = [xold;yold] + NewtonStep;
     x = v(1:nx);
     y = v(nx+1:end);
-%     fprintf('NEWTON : %7s%14.3f|%12.3f|%13.3f|%13.3f\n',0,norm(NewtonStep,2),delta,alpha,c'*x);
-
+    fprintf('NEWTON : %7s%14.3f|%12.3f|%13.3f|%13.3f\n',0,norm(NewtonStep,2),delta,alpha,c'*x);
+    steps = steps+1;
 end
 function bool = isInDomain(x)
         nx = length(x);
