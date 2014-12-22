@@ -75,17 +75,17 @@ end
 figure()
 trisurf(Tri,X,Y,Z1);
 title('champs sigmaXX');
-%saveas(gcf,'sigmaxxN32.eps','epsc')
+%saveas(gcf,'sigmaxxk4.eps','epsc')
 
 figure()
 trisurf(Tri,X,Y,Z2);
 title('champs sigmaXY');
-%saveas(gcf,'sigmaxyN32.eps','epsc')
+%saveas(gcf,'sigmaxyk4.eps','epsc')
 
 figure()
 trisurf(Tri,X,Y,Z3);
 title('champs sigmaYY');
-%saveas(gcf,'sigmayyN32.eps','epsc')
+%saveas(gcf,'sigmayyk4.eps','epsc')
 
 figure()
 trisurf(Tri,X,Y,(Z1-Z3).^2 + (2*Z2).^2);

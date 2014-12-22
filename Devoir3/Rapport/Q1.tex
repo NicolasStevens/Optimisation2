@@ -1,3 +1,4 @@
+\thispagestyle{empty}
 \section*{Introduction}
 Soit une poutre de section carré et de longueur "infinie" soumise à une charge $F$ sur sa moitié centrale supérieur. On se propose d'étudier la résistance de cette poutre lorsqu'elle est chargée verticalement. On définie le champs de contraintes $\sigma = \begin{pmatrix}
 \sigma_{xx} & \sigma_{xy}\\
@@ -24,6 +25,7 @@ Comme ce problème possède une infinité de contraintes (problème continu), no
 
 
 \newpage
+\setcounter{page}{1}
 \section{Modélisation}
 On souhaite formuler les contraintes mécaniques précédentes dans le cas discrétisé, comme des contraintes d'un problème convexe.\\
 
@@ -131,12 +133,15 @@ Les conditions frontières supérieurs donnent, pour tout nœud $a$ appartenant 
 
 
 Toutes les contraintes énoncée précédemment forment un système $Ax=b$. A cela viennent s'ajouter les contraintes de von Mises qui sont convexes. Notre problème d'optimisation est donc convexe et s'écrit 
-\begin{align*}
+\begin{equation}
+\begin{aligned} \label{eq:SystToSolve}
 & \max c^T x\\
  Ax &= b\\
- x & \in \mathcal{X}
-\end{align*}
-où $\mathcal{X}$ est l'ensemble décrit par les contraintes de von Mises. L'appartenance à cet ensemble sera imposer au moyens de fonctions barrières (voir méthodes des point intérieur). 
+ (x_{i,xx}-x_{i,yy})^2+(2x_{i,xy})^2 & \leq & 4k^2
+\end{aligned}
+\end{equation}
+
+où les inégalités forment l'ensemble décrit par les contraintes de von Mises. L'appartenance à cet ensemble sera imposer au moyens de fonctions barrières (voir méthodes des point intérieur). 
 
 Si on fait un bilan. Soit $N$ le nombre de carrés sur un côté de la section de la poutre, alors on a : $\text{\# carrés  } = N^2$, $\text{\# triangles  } = 4N^2$, $\text{\# points  } = 12 N^2$, $\text{\# contraintes  } = 24N^2+12N(N-1)+8N + 4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)$.
 Pour $N=4$ par exemple, on a $520$ contraintes.

@@ -1,20 +1,13 @@
 \section{Méthode de point intérieur}
 
-Nous cherchons à définir une méthode à pas longs pour un problème d'optimisation du type suivant :
-\begin{eqnarray*}
-\min_{x} & c^Tx &\\
-\begin{pmatrix} A \end{pmatrix}
-x & = &b \\
-(x_i-x_{i+nn})^2+(2x_{i+2*nn})^2 & \leq & 4k^2 
-\end{eqnarray*}
-A cet effet nous supprimons les contraintes d'inégalité à l'aide de fonctions barrières. Le problème perturbé s'écrit donc
-\begin{eqnarray*}
-\max_{x}  & \frac{1}{\mu_k}c^Tx - \varphi(x)& \\
-Ax & = & b
-\end{eqnarray*}
-Avec $\varphi(x) = \sum_{i} \log(4k^2 - (x_i-x_{i+nn})^2+(2x_{i+2*nn})^2)$
+Nous cherchons à définir une méthode à pas longs pour un problème d'optimisation du type de \eqref{eq:SystToSolve}. Nous supprimons les contraintes d'inégalité à l'aide de fonctions barrières. Le problème perturbé s'écrit donc
+\begin{align*}
+\max_{x}  & \frac{1}{\mu_k}c^Tx - \varphi(x) \\
+Ax & =  b
+\end{align*}
+Avec $\varphi(x) = \sum_{i} \log(4k^2 - (x_i-x_{i+nn})^2+(2x_{i+2*nn})^2)$.
 
-On va résoudre ce problème à l'aide d'une méthode de point intérieur à pas longs dont voici l'algorithme.
+On résout ce problème à l'aide d'une méthode de point intérieur à pas longs.
 On a alors l'algorithme suivant
 \begin{algorithm}[!h]
 \KwData{$A,c,b,x_0,y_0,\tau,\mu_0, \epsilon,\sigma,\nu$}
@@ -26,22 +19,21 @@ Appliquer Newton jusqu'à ce que $\delta(x,\mu_k)<\tau$\;
 \end{algorithm}
 
 
-Comme le problème est concave, nous pouvons écrire les conditions d'optimalité comme suit :
-$G(x,y) = \frac{1}{\mu_k}c^Tx -\varphi(x) +y^T(Ax-b)$
-\begin{eqnarray*}
-\nabla_{x}G & = & \frac{1}{\mu_k}c -\nabla F-A^Ty = 0 \\
-\nabla_{y}G & = & Ax-b= 0 \\
-\end{eqnarray*}
-Où $y$ est le vecteur des multiplicateurs de Lagrange. On doit donc résoudre $\nabla G=0 $. Le pas de Newton pour cette équation est donné par 
-$$
+Comme le problème est concave, on écrit $G(x,y) = \frac{1}{\mu_k}c^Tx -\varphi(x) +y^T(Ax-b)$; et les conditions d'optimalité sont $\nabla G=0 $, ou plus explicitement :
+\begin{align*}
+\nabla_{x}G & =  \frac{1}{\mu_k}c -\nabla \varphi -A^Ty = 0 \\
+\nabla_{y}G & =  Ax-b= 0 \\
+\end{align*}
+Où $y$ est le vecteur des multiplicateurs de Lagrange. Il s'agit d'un système non-linéaire d'équations ($\varphi$ non-linéaire) qu'on peut résoudre par la méthode de Newton. 
+Le pas de Newton pour cette équation est donné par la résolution du système 
+\begin{equation}
 \nabla^2G  \begin{pmatrix}
 \Delta x \\ \Delta y
 \end{pmatrix}
 = 
 -\nabla G
-$$
-On a alors le système suivant qui détermine le pas de Newton. 
-$$\begin{pmatrix}
+\Longleftrightarrow
+\begin{pmatrix}
 -\nabla^2 \varphi(x) & A^T \\
 A & 0
 \end{pmatrix} \begin{pmatrix}
@@ -49,5 +41,8 @@ A & 0
 \end{pmatrix} = \begin{pmatrix}
 -(\frac{1}{\mu_k}-\nabla \varphi + A^Ty)\\
 0
-\end{pmatrix}$$
-Pour ce qui est de l'itéré initial $(x_0,y_0)$, on remarque que $(0,y_0)$ est une solution admissible pour tout $y_0$
+\end{pmatrix}
+\end{equation}
+
+Nous avons donc opté pour la méthode qui consiste à modifier le pas de Newton pour y intégrer les contraintes d'égalité.
+Pour ce qui est de l'itéré initial $(x_0,y_0)$, on remarque que $(0,y_0)$ est une solution admissible pour tout $y_0$.

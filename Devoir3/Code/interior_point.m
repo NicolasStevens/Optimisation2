@@ -5,15 +5,15 @@ function [x_k] = interior_point(A,b,c,x_0,y_0,sigma,epsilon,mu_0,tau,k,nu,boost,
 % s.t. Ax = b
 % + Von-Mises
 
-%% Additional parameter
+% Additional parameter
 itMax = 50;
 mu_fin = epsilon/(sqrt(nu)+tau*epsilon);
-%% Starting point
+% Starting point
 x_k = x_0;
 y_k = y_0;
 mu_k = mu_0;
 
-%% Long step iterations
+% Long step iterations
 i=0;    
 
 while(i<itMax && mu_k>mu_fin)
@@ -35,9 +35,6 @@ fprintf('Maximum amount of iterations reached\n');
 end
 end
 end
-
-
-
 
 
 
