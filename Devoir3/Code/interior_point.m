@@ -8,7 +8,7 @@ function [x_k] = interior_point(A,b,c,x_0,y_0,sigma,epsilon,mu_0,tau,k)
 %% Additional parameters
 itMax = 50;
 x_k = x_0;
-% y_k = y_0;
+y_k = y_0;
 nx = length(x_k);
 ny = length(y_0);
 nn = nx/3;
@@ -20,8 +20,8 @@ i=0;
 % TODO : compute mu_f
 while(i<itMax && mu_k>epsilon)
 mu_k = sigma*mu_k;
-fprintf('*Interior point method iteration %d \nBarrier multiplier value(mu_k) : %d \n',i,mu_k);
-x_k = NewtonSteps(x_k,zeros(ny,1),A,c,k,mu_k,tau);
+fprintf('*Interior point method iteration %d \nBarrier multiplier value(mu_k) : %d \n****Obj : %d\n',i,mu_k,c'*x_k);
+[x_k,y_k] = NewtonSteps(x_k,y_k,A,c,k,mu_k,tau);
 i=i+1;
 if(i==itMax)
 fprintf('Maximum amount of iterations reached\n');
