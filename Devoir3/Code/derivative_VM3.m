@@ -28,7 +28,7 @@ h3 = diag((-8*C1-64*sxy.^2)./(C1.^2));
 
 H = zeros(nx,nx);
 for i=1:nn
-H(1+3*(i-1):3*i,1+3*(i-1):3*i) = [h1(i,i) h2(i,i) -h1(i,i);
+H(1+3*(i-1):3*i,1+3*(i-1):3*i) = -[h1(i,i) h2(i,i) -h1(i,i);
                                 h2(i,i) h3(i,i) -h2(i,i);
                                 -h1(i,i) -h2(i,i) h1(i,i)];
 end
