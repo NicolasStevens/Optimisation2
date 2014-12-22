@@ -6,7 +6,7 @@ close all;
 n = 4;                     % nbr triangles
 nbrVariables = n^2*4*9;     % nbr variables
 mu = 1;
-sigma = 0.1;
+sigma = 0.4;
 epsilon = 10^(-5);
 tau = 0.2;
 k = 1;

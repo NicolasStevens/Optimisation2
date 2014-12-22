@@ -4,6 +4,7 @@ x = xold;
 y = yold;
 nx = length(x);
 ny = length(y);
+fprintf('Newton steps  ::  norm(step)  |    delta   |  objective  \n');
 while delta>= tau
     [VM,H] = derivative_VM3(x,k);
     F = zeros(nx+ny,1);
@@ -24,7 +25,7 @@ while delta>= tau
     v = [xold;yold] + NewtonStep;
     x = v(1:nx);
     y = v(nx+1:end);
-    fprintf('Newton step, norm(step) = %s   delta = %s, obj = %s \n',norm(NewtonStep,2),delta,c'*x);
+    fprintf('NEWTON : %7s%14.3f|%12.3f|%13.3f\n',0,norm(NewtonStep,2),delta,c'*x);
 end
 
 end
