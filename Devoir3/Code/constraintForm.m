@@ -3,8 +3,11 @@ function [A,b,c] = constraintForm(N)
 % Fonction qui calcul la matrice A, le vecteur b des contraintes ainsi que
 % la fonction objectif c. N est le nombre de carre sur chaque cote.
 %
+% Les varaibles dont stockee comme suit [sigmaXX1 sigmaXY1 sigmaYYA
+% sigmaXX2...] donc point par point.
+%
 
-L=2;
+L=1;
 l=L/N;
 h=l/2;
 
@@ -18,8 +21,8 @@ c=zeros(3*nBNode,1);
 %objective
 for i=N/4+1:3*N/4
     indp = (i-1)*12 + 9;
-   c(indp+1+2*nBNode)=l/4;
-   c(indp+3+2*nBNode)=l/4;
+   c(indp+1+2*nBNode)=l/2;
+   c(indp+3+2*nBNode)=l/2;
 end
 
 
