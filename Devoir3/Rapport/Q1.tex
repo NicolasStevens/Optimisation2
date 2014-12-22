@@ -10,10 +10,12 @@ Soit une poutre de section carré et de longueur "infinie" soumise à une charge
 \sigma n &= 0 & \text{sur les frontières latérales} \label{eq:contrainteFrontiere} \\
 (\sigma_{xx} - \sigma_{yy})^2 + (2 \sigma_{xy})^2 & \leq 4 k^2 \label{eq:contrainteTresca}\\
 \end{align}
-où les contraintes \eqref{eq:contrainteequilibre1} et \eqref{eq:contrainteequilibre2} expriment la conservation de la quantité de mouvement.; et la contrainte \eqref{eq:contrainteTresca} est le critère de plasticité de Tresca-von Mises. \\
-Comme ce problème possède une infinité de contraintes (problème continu), nous le discrétisons en triangles comme à la figure \ref{fig:discretisation}. A première vue, un noeud peut prendre plusieurs valeurs $\sigma$ si il appartient à plusieurs triangles. 
+où les contraintes \eqref{eq:contrainteequilibre1} et \eqref{eq:contrainteequilibre2} expriment la conservation de la quantité de mouvement; et la contrainte \eqref{eq:contrainteTresca} est le critère de plasticité de Tresca-von Mises. 
 
-\begin{figure}
+
+Comme ce problème possède une infinité de contraintes (problème continu), nous le discrétisons en triangles comme à la figure \ref{fig:discretisation}. Un nœud peut prendre plusieurs valeurs $\sigma$ si il appartient à plusieurs triangles. 
+
+\begin{figure}[h!]
 \centering
 \includegraphics[height=5cm]{images/discretisation.png}
 \caption{Section de la poutre discrétisée en triangles}
@@ -23,7 +25,7 @@ Comme ce problème possède une infinité de contraintes (problème continu), no
 
 \newpage
 \section{Modélisation}
-Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la longueur d'un côté d'un triangle et $h=\frac{l}{2}$, la longueur de la hauteur. On considère quatre cas : 
+Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la longueur d'un côté d'un carré et $h=\frac{l}{2}$, la longueur de la hauteur d'un triangle. On considère quatre cas de triangles : 
 \begin{itemize}
 \item cas triangle 1, orienté comme le 1 sur la figure \ref{fig:discretisation};
 \item cas triangle 2, orienté comme le 2 sur la figure \ref{fig:discretisation};
@@ -33,7 +35,7 @@ Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la lo
 et dans chacun des cas, on écrit les conditions de divergence nulle comme des différences finies. 
 
 
-Pour les conditions de continuité, on distingue quatre cas : 
+Pour les conditions de continuité, on distingue également quatre cas : 
 \begin{equation}
 \overrightarrow{n} = \begin{pmatrix}
 1\\
@@ -53,9 +55,55 @@ Pour les conditions de continuité, on distingue quatre cas :
 \end{pmatrix}
 \end{equation}
 
-La fonction objectif correspond à une règle des trapèze sur les $\sigma_{yy}$ en les points où le bloc exerçant la force s'applique. 
+La fonction objectif correspond à une règle des trapèze sur les $\sigma_{yy}$ des triangles en lesquels le bloc exerce la force (appelons cet ensemble $\mathcal{F}$; il s'agit de triangles de type 4. Nous appelons les sommets supérieur de ce triangles 1 et 3). Cela donne
+\begin{align*}
+\max \sum_{i \in \mathcal{F}} L \frac{\sigma_{yy}^1 + \sigma_{yy}^3}{2}
+\end{align*}
 
-Au final, les conditions d'équilibre donnent : 
+Les conditions de continuité donnent, en nommant $a,b$ les points d'un coté du segment et $c,d$ les points de l'autre coté : \\
+\begin{center}
+\begin{minipage}{0.4\textwidth}
+\textbf{cas 1 : }
+\begin{align*}
+\sigma_{xx}^a - \sigma_{xy}^a &= \sigma_{xx}^c - \sigma_{xy}^c \\
+ \sigma_{xy}^a - \sigma_{yy}^a &= \sigma_{xy}^c - \sigma_{yy}^c \\
+ \sigma_{xx}^b - \sigma_{xy}^b &= \sigma_{xx}^d - \sigma_{xy}^d \\
+ \sigma_{xy}^b - \sigma_{yy}^b &= \sigma_{xy}^d - \sigma_{yy}^d \\
+\end{align*}
+\end{minipage}
+\vline
+\begin{minipage}{0.4\textwidth}
+\textbf{cas 2 :}
+\begin{align*}
+\sigma_{xx}^a + \sigma_{xy}^a &= \sigma_{xx}^c + \sigma_{xy}^c \\
+ \sigma_{xy}^a + \sigma_{yy}^a &= \sigma_{xy}^c + \sigma_{yy}^c \\
+ \sigma_{xx}^b +\sigma_{xy}^b &= \sigma_{xx}^d + \sigma_{xy}^d \\
+ \sigma_{xy}^b + \sigma_{yy}^b &= \sigma_{xy}^d + \sigma_{yy}^d \\
+\end{align*}
+\end{minipage}
+
+\begin{minipage}{0.4\textwidth}
+\textbf{cas 3 :}
+\begin{align*}
+\sigma_{xx}^a &= \sigma_{xx}^c \\
+ \sigma_{xy}^a  &= \sigma_{xy}^c \\
+ \sigma_{xx}^b&= \sigma_{xx}^d\\
+ \sigma_{xy}^b &= \sigma_{xy}^d  \\
+\end{align*}
+\end{minipage}
+\vline
+\begin{minipage}{0.4\textwidth}
+\textbf{cas 4 :}
+\begin{align*}
+\sigma_{xy}^a &= \sigma_{xy}^c \\
+\sigma_{yy}^a &=  \sigma_{yy}^c \\
+\sigma_{xy}^b &= \sigma_{xy}^d \\
+\sigma_{yy}^b &= \sigma_{yy}^d \\
+\end{align*}
+\end{minipage}
+\end{center}
+
+Les conditions d'équilibre donnent : 
 \begin{align*}
 \frac{\sigma_{xx}^3 - \frac{\sigma_{xx}^1+\sigma_{xx}^2}{2}}{h} + \frac{\sigma_{xy}^1-\sigma_{xy}^2}{l}&=0 & \text{pour triangle type 1}\\
 \frac{\sigma_{xy}^3 - \frac{\sigma_{xy}^1+\sigma_{xy}^2}{2}}{h} + \frac{\sigma_{yy}^1-\sigma_{yy}^2}{l}&=0& \text{pour triangle type 1}\\
@@ -66,35 +114,7 @@ Au final, les conditions d'équilibre donnent :
 \frac{\sigma_{xx}^3-\sigma_{xx}^1}{l} + \frac{\frac{\sigma_{xy}^1+\sigma_{xy}^3}{2} - \sigma_{xy}^2 }{h} &=0 & \text{pour triangle type 4}\\
 \frac{\sigma_{xy}^3-\sigma_{xy}^1}{l} + \frac{\frac{\sigma_{yy}^1+\sigma_{yy}^3}{2} - \sigma_{yy}^2 }{h} &=0 & \text{pour triangle type 4}\\
 \end{align*}
-Les conditions de continuité donnent, en nommant $a,b$ les points d'un coté du segment et $c,d$ les points de l'autre coté : \\
-\textbf{cas 1 : }
-\begin{align*}
-\sigma_{xx}^a - \sigma_{xy}^a &= \sigma_{xx}^c - \sigma_{xy}^c \\
- \sigma_{xy}^a - \sigma_{yy}^a &= \sigma_{xy}^c - \sigma_{yy}^c \\
- \sigma_{xx}^b - \sigma_{xy}^b &= \sigma_{xx}^d - \sigma_{xy}^d \\
- \sigma_{xy}^b - \sigma_{yy}^b &= \sigma_{xy}^d - \sigma_{yy}^d \\
-\end{align*}
-\textbf{cas 2 :}
-\begin{align*}
-\sigma_{xx}^a + \sigma_{xy}^a &= \sigma_{xx}^c + \sigma_{xy}^c \\
- \sigma_{xy}^a + \sigma_{yy}^a &= \sigma_{xy}^c + \sigma_{yy}^c \\
- \sigma_{xx}^b +\sigma_{xy}^b &= \sigma_{xx}^d + \sigma_{xy}^d \\
- \sigma_{xy}^b + \sigma_{yy}^b &= \sigma_{xy}^d + \sigma_{yy}^d \\
-\end{align*}
-\textbf{cas 3 :}
-\begin{align*}
-\sigma_{xx}^a &= \sigma_{xx}^c \\
- \sigma_{xy}^a  &= \sigma_{xy}^c \\
- \sigma_{xx}^b&= \sigma_{xx}^d\\
- \sigma_{xy}^b &= \sigma_{xy}^d  \\
-\end{align*}
-\textbf{cas 4 :}
-\begin{align*}
-\sigma_{xy}^a &= \sigma_{xy}^c \\
-\sigma_{yy}^a &=  \sigma_{yy}^c \\
-\sigma_{xy}^b &= \sigma_{xy}^d \\
-\sigma_{yy}^b &= \sigma_{yy}^d \\
-\end{align*}
+
 
 Les conditions frontières donnent, pour tout nœud $a$ appartenant à une frontière latérale : 
 \begin{align*}
@@ -107,6 +127,13 @@ Les conditions frontières donnent, pour tout nœud $a$ appartenant au premier q
 \sigma_{yy}^a&= 0\\
  \sigma_{xy}^a &= 0  \\
 \end{align*}
+Toutes les contraintes énoncée précédemment forment un système $Ax=b$. A cela viennent s'ajouter les contraintes de von Mises qui sont convexes. Notre problème d'optimisation est donc convexe et s'écrit 
+\begin{align*}
+& \max c^T x\\
+ Ax &= b\\
+ x \in \mathcal{X}
+\end{align*}
+où $\mathcal{X}$ est l'ensemble décrit par les contraintes de von Mises. L'appartenance à cet ensemble sera imposer au moyens de fonctions barrières (voir méthodes des point intérieur). 
 
 
 Si $N$ est le nombre de carrés sur un côté de la section de la poutre, alors on a :
@@ -116,4 +143,4 @@ Si $N$ est le nombre de carrés sur un côté de la section de la poutre, alors 
 \text{\# points  } &= 12 N^2\\
 \text{\# contraintes  } &= 24N^2+12N(N-1)+8N + 4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)
 \end{align*}
-Pour $N=4$ par exemple, on a $520$ contraintes
+Pour $N=4$ par exemple, on a $520$ contraintes.

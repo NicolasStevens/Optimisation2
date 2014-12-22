@@ -19,4 +19,4 @@ y_0 = zeros(ny,1);
 b= zeros(ny,1);
 
 x = interior_point(A,zeros(length(A(:,1)),1),c,x_0,y_0,sigma,epsilon,mu,tau,k);
-c'*x
+obj = c'*x
