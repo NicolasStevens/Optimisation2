@@ -21,7 +21,7 @@ c=zeros(3*nBNode,1);
 
 %objective
 for i=N/4+1:3*N/4
-    indp = (i-1)*12 + 9
+    indp = (i-1)*12 + 9;
    c(indp+1+2*nBNode)=l/2;
    c(indp+3+2*nBNode)=l/2;
 end
@@ -189,9 +189,9 @@ end
 % bord verticale
 for i=1:N-1
     for j=1:N
-        indl = N*N*24+(N-1)*(i-1)*4 + (j-1)*4;
-        indp1 = N*(i-1)+(j-1)*12+6;
-        indp2 = N*(i-1)+(j-1)*12+12;
+        indl = N*N*24 + (N-1)*(i-1)*4 + (j-1)*4;
+        indp1 = N*(i-1)*12+(j-1)*12 + 6;
+        indp2 = N*(i-1)*12+(j-1)*12 + 12;
         %cont1
         A(indl+1,indp1+2) =1;
         A(indl+1,indp2+2) =-1;
@@ -211,8 +211,8 @@ end
 for i=1:N
     for j=1:N-1
         indl = N*N*24+4*N*(N-1)+(N-1)*(i-1)*4 + (j-1)*4;
-        indp1 = N*(i-1)+(j-1)*12+3;
-        indp2 = N*i+(j-1)*12+9;
+        indp1 = N*(i-1)*12 +(j-1)*12+3;
+        indp2 = N*i*12 +(j-1)*12+9;
         %cont1
         A(indl+1,indp1+2+nBNode) =1;
         A(indl+1,indp2+1+nBNode) =-1;
@@ -236,16 +236,16 @@ for i=1:N
     indp2 = i*N*12-3;
     
     %frontiere gauche
-    A(indl+1,indp+1) = 1;
-    A(indl+2,indp+2) = 1;
-    A(indl+3,indp+1+nBNode) = 1;
-    A(indl+4,indp+2+nBNode) = 1;
+    A(indl+1,indp1+1) = 1;
+    A(indl+2,indp1+2) = 1;
+    A(indl+3,indp1+1+nBNode) = 1;
+    A(indl+4,indp1+2+nBNode) = 1;
     
     %frontiere droite
-    A(indl+5,indp+2) = 1;
-    A(indl+6,indp+3) = 1;
-    A(indl+7,indp+2+nBNode) = 1;
-    A(indl+8,indp+3+nBNode) = 1;
+    A(indl+5,indp2+2) = 1;
+    A(indl+6,indp2+3) = 1;
+    A(indl+7,indp2+2+nBNode) = 1;
+    A(indl+8,indp2+3+nBNode) = 1;
 end
 
 %================= conditions frontiere superieur ================
@@ -276,17 +276,18 @@ end
 Anew=zeros(nbCons,3*nBNode);
 cnew=zeros(3*nBNode,1);
 
-for i=1:nbNoeud
+for i=1:nBNode
    Anew(:,3*(i-1)+1) = A(:,i); 
-   Anew(:,3*(i-1)+2) = A(:,i+nbNoeud); 
-   Anew(:,3*(i-1)+3) = A(:,i+2*nbNoeud);
+   Anew(:,3*(i-1)+2) = A(:,i+nBNode); 
+   Anew(:,3*(i-1)+3) = A(:,i+2*nBNode);
    cnew(3*(i-1)+1) = c(i);
-   cnew(3*(i-1)+2) = c(i+nbNoeud);
-   cnew(3*(i-1)+3) = c(i+2*nbNoeud);
+   cnew(3*(i-1)+2) = c(i+nBNode);
+   cnew(3*(i-1)+3) = c(i+2*nBNode);
 end
-A=Anew;
+A=sparse(Anew);
 c=cnew;
 
+spy(Anew);
 
 end
 
