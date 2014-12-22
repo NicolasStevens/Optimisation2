@@ -1,13 +1,18 @@
-\section*{Annexe 1:Développement du gradient de la barrière}
-
+\section*{Annexe 1: Développement du gradient de la barrière}
+Voici une expression plus complète des dérivées partielles de la fonction $\phi$ par rapport aux variables d'un noeud : $(\sigma_xx,\sigma_{xy},\sigma_{yy})$
 \begin{eqnarray*}
-\frac{\partial \varphi}{\partial \sigma_{xx}} & = & \frac{2C2}{C1}\\
-\frac{\partial \varphi}{\partial \sigma_{yy}} & = & -\frac{\partial F}{\partial \sigma_{xx}} \\
-\frac{\partial \varphi}{\partial \sigma_{xy}} & = & -\frac{-8\sigma_{xy}}{C1}\\
-\frac{\partial^2 \varphi}{\partial \sigma_{xx}^2} & = & \frac{2C1+4C2^2}{C1^2} \\
-\frac{\partial^2 \varphi}{\partial \sigma_{yy}\partial\sigma_{xx}} & = & -\frac{\partial^2 F}{\partial \sigma_{xx}^2}\\
-\frac{\partial^2 \varphi}{\partial \sigma_{xy}\partial\sigma_{xx}} & = & \frac{-16C2}{C1^2} \\
-\frac{\partial^2 \phi}{\partial \sigma_{yy}^2}& = & \frac{\partial^2 F}{\partial \sigma_{xx}^2}\\
-\frac{\partial^2 \phi}{\partial \sigma_{xy}\partial \sigma_{yy}}& = & -\frac{\partial^2 F}{\partial \sigma_{xy}\sigma_{xx}}\\
-\frac{\partial^2 \phi}{\partial \sigma_{xy}^2}& = & \frac{-8C1-64\sigma_{xy})}{C1^2}
+\frac{\partial \phi}{\partial \sigma_{xx}} & = & \frac{2C2}{C1}\\
+\frac{\partial \phi}{\partial \sigma_{yy}} & = & -\frac{\partial \phi}{\partial \sigma_{xx}} \\
+\frac{\partial \phi}{\partial \sigma_{xy}} & = & \frac{8\sigma_{xy}}{C1}\\
+\frac{\partial^2 \phi}{\partial \sigma_{xx}^2} & = & \frac{2C1+4C2^2}{C1^2} \\
+\frac{\partial^2 \phi}{\partial \sigma_{yy}\partial\sigma_{xx}} & = & -\frac{\partial^2 \phi}{\partial \sigma_{xx}^2}\\
+\frac{\partial^2 \phi}{\partial \sigma_{xy}\partial\sigma_{xx}} & = & \frac{16C2}{C1^2} \\
+\frac{\partial^2 \phi}{\partial \sigma_{yy}^2}& = & \frac{\partial^2 \phi}{\partial \sigma_{xx}^2}\\
+\frac{\partial^2 \phi}{\partial \sigma_{xy}\partial \sigma_{yy}}& = & -\frac{\partial^2 \phi}{\partial \sigma_{xy}\sigma_{xx}}\\
+\frac{\partial^2 \phi}{\partial \sigma_{xy}^2}& = & \frac{8C1+64\sigma_{xy})}{C1^2}
+\end{eqnarray*}
+avec 
+\begin{eqnarray*}
+C1 & = & 4k^2 -(\sigma_{xx}-\sigma_{yy})^2 -(2\sigma^2)\\
+C2 & = & (\sigma_{xx}-\sigma_{yy})
 \end{eqnarray*}

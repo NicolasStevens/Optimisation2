@@ -54,10 +54,10 @@ for i=1:length(nArray)
     
 end
 figure();
-plot(nArray,time_basic);hold on;
-plot(nArray,time_boost);hold on;
-plot(nArray,time_linesearch);hold on;
-plot(nArray,time_both);hold on;
+plot(nArray,time_basic,'r');hold on;
+plot(nArray,time_boost,'y');hold on;
+plot(nArray,time_linesearch,'g');hold on;
+plot(nArray,time_both,'b');hold on;
 xlabel('n');
 ylabel('elapsed time(s)');
 title('Performance tests');
