@@ -1,19 +1,15 @@
 function [A,b,c] = constraintForm(N)
 %
-% N
+% Fonction qui calcul la matrice A, le vecteur b des contraintes ainsi que
+% la fonction objectif c. N est le nombre de carre sur chaque cote.
 %
-
-
-% n is the number of triangles
-% k is the number of nodes on each border. 
-% m is the number of nodes
 
 L=2;
 l=L/N;
 h=l/2;
 
 nBNode = N*N*4*3;
-nbCons = 2*(2*floor(N/4)+2) + N*N*24+2*4*N*(N-1)+N*8;
+nbCons = 4*(floor(N/4)+ceil(N/4)) + N*N*24+2*4*N*(N-1)+N*8 
 
 A=zeros(nbCons,3*nBNode);
 b=zeros(nbCons,1);
@@ -22,8 +18,8 @@ c=zeros(3*nBNode,1);
 %objective
 for i=N/4+1:3*N/4
     indp = (i-1)*12 + 9;
-   c(indp+1+2*nBNode)=l/2;
-   c(indp+3+2*nBNode)=l/2;
+   c(indp+1+2*nBNode)=l/4;
+   c(indp+3+2*nBNode)=l/4;
 end
 
 
@@ -44,7 +40,7 @@ for i=1:N*N
     A(indl+2,indp1+2+nBNode)=-1/(2*h);
     A(indl+2,indp1+3+nBNode)=1/h;
     A(indl+2,indp1+1+2*nBNode)=1/l;
-    A(indl+2,indp1+1+2*nBNode)=1/l;
+    A(indl+2,indp1+2+2*nBNode)=-1/l;
     
     %triangle type 2
     indp2 = (i-1)*12 + 3;%indice sur les points(12 points par triangles)
@@ -77,7 +73,7 @@ for i=1:N*N
     A(indl+6,indp3+3+2*nBNode)=1/l;
     
     %triangle type 4
-    indp4 = (i-1)*12 + 3;%indice sur les points(12 points par triangles)
+    indp4 = (i-1)*12 + 9;%indice sur les points(12 points par triangles)
     
     A(indl+7,indp4+1)=-1/l;
     A(indl+7,indp4+3)=1/l;
@@ -91,9 +87,10 @@ for i=1:N*N
     A(indl+8,indp4+2+2*nBNode)=-1/h;
     A(indl+8,indp4+3+2*nBNode)=1/(2*h);
     
+    
     %================ continuite ===================
     div = 8*N*N+(i-1)*16;
-    indcontL = (i-1)*8;
+
     %===cote 23-45
     % Cont11 Node1
     A(div+1,indp1+2)=-1;
@@ -142,13 +139,13 @@ for i=1:N*N
     % Cont31 Node1
     A(div+9,indp3+1)=-1;
     A(div+9,indp3+1+nBNode)=1;
-    A(div+9,indp4+1)=1;
-    A(div+9,indp4+1+nBNode)=-1;
+    A(div+9,indp4+2)=1;
+    A(div+9,indp4+2+nBNode)=-1;
     % Cont32 Node1
     A(div+10,indp3+1+nBNode)=-1;
     A(div+10,indp3+1+2*nBNode)=1;
-    A(div+10,indp4+1+nBNode)=1;
-    A(div+10,indp4+1+2*nBNode)=-1;
+    A(div+10,indp4+2+nBNode)=1;
+    A(div+10,indp4+2+2*nBNode)=-1;
     % Cont31 Node2
     A(div+11,indp3+3)=-1;
     A(div+11,indp3+3+nBNode)=1;
@@ -187,8 +184,8 @@ end
 
 %============== continuite frontier des carre ==================
 % bord verticale
-for i=1:N-1
-    for j=1:N
+for i=1:N
+    for j=1:N-1
         indl = N*N*24 + (N-1)*(i-1)*4 + (j-1)*4;
         indp1 = N*(i-1)*12+(j-1)*12 + 6;
         indp2 = N*(i-1)*12+(j-1)*12 + 12;
@@ -208,9 +205,9 @@ for i=1:N-1
 end
 
 % bord horizontal
-for i=1:N
-    for j=1:N-1
-        indl = N*N*24+4*N*(N-1)+(N-1)*(i-1)*4 + (j-1)*4;
+for i=1:N-1
+    for j=1:N
+        indl = N*N*24+4*N*(N-1)+N*(i-1)*4 + (j-1)*4;
         indp1 = N*(i-1)*12 +(j-1)*12+3;
         indp2 = N*i*12 +(j-1)*12+9;
         %cont1
@@ -233,7 +230,7 @@ end
 for i=1:N
     indl=N*N*24+2*4*N*(N-1)+(i-1)*8;
     indp1 = (i-1)*N*12;
-    indp2 = i*N*12-3;
+    indp2 = i*N*12-6;
     
     %frontiere gauche
     A(indl+1,indp1+1) = 1;
@@ -270,9 +267,8 @@ for i=1:(nbCarre)
 end
 
 
-
 %pivot
-
+% On reencode le tout point par point
 Anew=zeros(nbCons,3*nBNode);
 cnew=zeros(3*nBNode,1);
 
@@ -286,8 +282,6 @@ for i=1:nBNode
 end
 A=sparse(Anew);
 c=cnew;
-
-spy(Anew);
 
 end
 

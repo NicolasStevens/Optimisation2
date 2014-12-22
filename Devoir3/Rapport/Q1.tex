@@ -25,7 +25,9 @@ Comme ce problème possède une infinité de contraintes (problème continu), no
 
 \newpage
 \section{Modélisation}
-Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la longueur d'un côté d'un carré et $h=\frac{l}{2}$, la longueur de la hauteur d'un triangle. On considère quatre cas de triangles : 
+On souhaite formuler les contraintes mécaniques précédentes dans le cas discrétisé, comme des contraintes d'un problème convexe.\\
+
+Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la longueur d'un côté d'un carré et $h=\frac{l}{2}$, la longueur de la hauteur d'un triangle (un demi carré). On considère quatre cas de triangles : 
 \begin{itemize}
 \item cas triangle 1, orienté comme le 1 sur la figure \ref{fig:discretisation};
 \item cas triangle 2, orienté comme le 2 sur la figure \ref{fig:discretisation};
@@ -33,7 +35,6 @@ Soit $L$ la longueur d'un côté de la poutre. On défini $l=\frac{L}{N}$, la lo
 \item cas triangle 4, orienté comme le 4 sur la figure \ref{fig:discretisation};
 \end{itemize} 
 et dans chacun des cas, on écrit les conditions de divergence nulle comme des différences finies. 
-
 
 Pour les conditions de continuité, on distingue également quatre cas : 
 \begin{equation}
@@ -55,7 +56,7 @@ Pour les conditions de continuité, on distingue également quatre cas :
 \end{pmatrix}
 \end{equation}
 
-La fonction objectif correspond à une règle des trapèze sur les $\sigma_{yy}$ des triangles en lesquels le bloc exerce la force (appelons cet ensemble $\mathcal{F}$; il s'agit de triangles de type 4. Nous appelons les sommets supérieur de ce triangles 1 et 3). Cela donne
+La fonction objectif correspond à une règle des trapèze sur les $\sigma_{yy}$ des triangles en lesquels le bloc exerce la force (appelons cet ensemble $\mathcal{F}$. Il s'agit de triangles de type 4. Nous appelons les sommets supérieurs de chacun des ces triangles 1 et 3). Cela donne
 \begin{align*}
 \max \sum_{i \in \mathcal{F}} L \frac{\sigma_{yy}^1 + \sigma_{yy}^3}{2}
 \end{align*}
@@ -116,31 +117,31 @@ Les conditions d'équilibre donnent :
 \end{align*}
 
 
-Les conditions frontières donnent, pour tout nœud $a$ appartenant à une frontière latérale : 
+Les conditions frontières latérales donnent, pour tout nœud $a$ appartenant à une frontière latérale : 
 \begin{align*}
 \sigma_{xx}^a&= 0\\
  \sigma_{xy}^a &= 0  \\
 \end{align*}
 
-Les conditions frontières donnent, pour tout nœud $a$ appartenant au premier quart ou au dernier quart de la frontière supérieur (en fait c'est un peu plus subtil que ça, comme $N$ n'est pas toujours un multiple de 4, on a $2\lfloor \frac{N}{4} \rfloor + 1 \left( \lceil \frac{N}{4} \rceil - \lfloor \frac{N}{4} \rfloor \right) = \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil$ points en lesquels il faut imposer une contrainte de chaque côté du bloc exerçant la force; c'est-à-dire au total $4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)$ contraintes) : 
+Les conditions frontières supérieurs donnent, pour tout nœud $a$ appartenant au premier quart ou au dernier quart de la frontière supérieur (en fait c'est un peu plus subtil que ça, comme $N$ n'est pas toujours un multiple de 4, on a $2\lfloor \frac{N}{4} \rfloor + 1 \left( \lceil \frac{N}{4} \rceil - \lfloor \frac{N}{4} \rfloor \right) = \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil$ points en lesquels il faut imposer une contrainte de chaque côté du bloc exerçant la force; c'est-à-dire au total $4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)$ contraintes) : 
 \begin{align*}
 \sigma_{yy}^a&= 0\\
  \sigma_{xy}^a &= 0  \\
 \end{align*}
+
+
 Toutes les contraintes énoncée précédemment forment un système $Ax=b$. A cela viennent s'ajouter les contraintes de von Mises qui sont convexes. Notre problème d'optimisation est donc convexe et s'écrit 
 \begin{align*}
 & \max c^T x\\
  Ax &= b\\
- x \in \mathcal{X}
+ x & \in \mathcal{X}
 \end{align*}
 où $\mathcal{X}$ est l'ensemble décrit par les contraintes de von Mises. L'appartenance à cet ensemble sera imposer au moyens de fonctions barrières (voir méthodes des point intérieur). 
 
-
-Si $N$ est le nombre de carrés sur un côté de la section de la poutre, alors on a :
-\begin{align*}
-\text{\# carrés  } &= N^2\\
-\text{\# triangles  } &= 4N^2\\
-\text{\# points  } &= 12 N^2\\
-\text{\# contraintes  } &= 24N^2+12N(N-1)+8N + 4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)
-\end{align*}
+Si on fait un bilan. Soit $N$ le nombre de carrés sur un côté de la section de la poutre, alors on a : $\text{\# carrés  } = N^2$, $\text{\# triangles  } = 4N^2$, $\text{\# points  } = 12 N^2$, $\text{\# contraintes  } = 24N^2+12N(N-1)+8N + 4*\left(  \lfloor \frac{N}{4} \rfloor + \lceil \frac{N}{4} \rceil \right)$.
 Pour $N=4$ par exemple, on a $520$ contraintes.
+
+\paragraph{Solution optimale du problème discret : } L'idée de base des éléments finis est d'approcher l'ensemble des solutions $\mathcal{U}$ par un ensemble approché $\mathcal{U}_h$. Typiquement, un ensemble de polynômes d'interpolations. Cet ensemble respecte bien sûr $\mathcal{U}_h \subset \mathcal{U}$. La dimension de cet ensemble croit avec les degrés de libertés par élément (degré du polynôme d'interpolation sur chaque élément); et croit aussi avec le nombre d'éléments. Dans notre cas, on a choisi d'interpoler linéairement la solution sur chaque triangle. La dimension de l'espace des solutions discrètes $\mathcal{U}_h$ croit donc juste avec le nombre de triangles. 
+
+Il est donc important de se rendre compte qu'en résolvant le problème discret, on résout une \textbf{restriction} du problème initial et par conséquent, l'objectif est moins élevé que le véritable objectif (donc la charge optimale discrète est moins élevé que la charge optimale réelle; ce qui n'est pas un problème vu qu'on souhaite calculer une charge limite avant rupture, donc on préfère trouver une charge limite plu petite que plus grande). Vraisemblablement au plus on aura de triangles, au plus on aura un espace de solutions grand, et au plus l'objectif (la charge limite optimale) sera élevé.
+
