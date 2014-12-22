@@ -23,9 +23,9 @@ fprintf('*Interior point method iteration %d \nBarrier multiplier value(mu_k) : 
 
 if boost && steps> 1
         if steps < 6
-            sigma = max(sigma*0.9,0.1);
+            sigma = max(sigma-0.2,0.1);
         elseif steps > 10
-            sigma = min(sigma*1.1,0.9);
+            sigma = min(sigma+0.2,0.9);
         end
 end
 
